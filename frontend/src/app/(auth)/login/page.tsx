@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LoginForm } from "@/components/auth";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Login — Buddy Script",
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
-  return <LoginForm />;
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-bs-bg">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
 }
