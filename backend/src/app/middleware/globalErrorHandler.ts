@@ -2,9 +2,12 @@ import { ErrorRequestHandler } from 'express';
 import config from '../config/index.js';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  res.status(500).json({
+  const statusCode = error.statusCode || 500;
+  const message = error.message || 'Something went wrong!';
+
+  res.status(statusCode).json({
     success: false,
-    message: error.message || 'Something went wrong!',
+    message,
     stack: config.env !== 'production' ? error?.stack : undefined,
   });
 };

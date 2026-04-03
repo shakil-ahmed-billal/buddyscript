@@ -1,0 +1,19 @@
+model Post {
+  id         String    @id @default(cuid())
+  title      String?
+  content    String?
+  image      String?
+  visibility Visibility @default(PUBLIC)
+  shares     Int        @default(0)
+  authorId   String
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments   Comment[]
+  likes      Like[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}

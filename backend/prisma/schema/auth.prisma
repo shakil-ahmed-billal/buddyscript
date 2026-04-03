@@ -2,12 +2,21 @@ model User {
   id            String    @id @default(cuid())
   email         String    @unique
   name          String
+  firstName     String
+  lastName      String
   emailVerified Boolean   @default(false)
   image         String?
+  role          String    @default("USER")
+  position      String?
+  isSuggested   Boolean   @default(false)
+  isYouMightLike Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
 }
 
 model Session {

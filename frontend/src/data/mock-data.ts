@@ -60,7 +60,7 @@ export const exploreItems: ExploreItem[] = [
   { label: "Insights", iconName: "insights" },
   { label: "Find Friends", href: "/find-friends", iconName: "friends" },
   { label: "Bookmarks", iconName: "bookmarks" },
-  { label: "Group", href: "/group", iconName: "friends", active: true },
+  { label: "Group", href: "/group", iconName: "friends" },
   { label: "Gaming", badge: "New", iconName: "gaming" },
   { label: "Settings", iconName: "settings" },
   { label: "Save post", iconName: "save" },

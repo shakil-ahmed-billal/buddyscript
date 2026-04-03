@@ -10,8 +10,15 @@ import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
 import { sanitizeRequest } from './app/middleware/sanitizeRequest.js';
 import config from './app/config/index.js';
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./app/lib/auth.js";
+
+import path from 'path';
 
 const app: Application = express();
+
+app.set("view engine", "ejs");
+app.set("views", path.join(process.cwd(), "src/app/templates"));
 
 app.use(helmet());
 
@@ -50,7 +57,7 @@ const authLimiter = rateLimit({
   message: 'Too many requests from this IP, please try again after 15 minutes',
 });
 
-app.use('/api/v1/auth', authLimiter);
+
 
 app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
@@ -58,6 +65,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(sanitizeRequest);
 app.use(morgan('dev'));
 
+app.all("/api/auth", toNodeHandler(auth));
+app.use('/api/v1/auth', authLimiter);
 app.use('/api/v1', router);
 
 app.get('/', (req: Request, res: Response) => {

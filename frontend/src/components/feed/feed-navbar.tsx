@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BsIcon } from "@/components/ui/bs-icons";
 import { BsInput } from "@/components/ui/bs-shared";
+import { logoutAction } from "@/services/auth.actions";
+import { UserProfileImage } from "@/components/ui/user-profile-image";
 
 // ─── Notification Dropdown ────────────────────────────────────────────────
 function NotificationDropdown({ open }: { open: boolean }) {
@@ -78,19 +80,24 @@ function NotificationDropdown({ open }: { open: boolean }) {
 }
 
 // ─── Profile Dropdown ─────────────────────────────────────────────────────
-function ProfileDropdown({ open }: { open: boolean }) {
+function ProfileDropdown({ open, user, setDropOpen }: { open: boolean, user: any, setDropOpen: (open: boolean) => void }) {
   if (!open) return null;
+
+  const handleLogout = async () => {
+    setDropOpen(false);
+    await logoutAction();
+  };
+
+  const userName = user ? (user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim()) : "Guest";
+  const userImage = user?.image || "/assets/images/profile.png";
+
   return (
     <div className="absolute right-0 top-[110%] w-[240px] bg-white dark:bg-bs-dark1 rounded-[6px] shadow-[7px_20px_60px_rgba(108,126,147,0.15)] z-50 border border-bs-bg dark:border-bs-dark2 py-[10px] animate-in fade-in slide-in-from-top-2 duration-200">
       {/* User Info */}
       <div className="flex gap-[12px] px-[20px] py-[15px] items-center border-b border-bs-bg dark:border-bs-dark2 mb-[10px]">
-        <img
-          src="/assets/images/profile.png"
-          alt=""
-          className="w-[45px] h-[45px] rounded-full object-cover border border-bs-bg dark:border-bs-dark2"
-        />
+        <UserProfileImage src={user?.image} name={userName} size={45} />
         <div>
-          <h4 className="text-[15px] font-bold text-bs-dark dark:text-bs-text font-[Poppins]">Dylan Field</h4>
+          <h4 className="text-[15px] font-bold text-bs-dark dark:text-bs-text font-[Poppins]">{userName}</h4>
           <Link
             href="/profile"
             className="text-[12px] text-bs-primary hover:underline font-medium font-[Poppins]"
@@ -126,14 +133,14 @@ function ProfileDropdown({ open }: { open: boolean }) {
             </a>
           </li>
           <li>
-            <a href="#0" className="flex items-center justify-between px-[15px] py-[10px] rounded-[4px] hover:bg-bs-bg dark:hover:bg-bs-dark2 transition-all group mt-[5px] border-t border-bs-bg dark:border-bs-dark2 pt-[15px]">
+            <button onClick={handleLogout} className="w-full flex items-center justify-between px-[15px] py-[10px] rounded-[4px] hover:bg-bs-bg dark:hover:bg-bs-dark2 transition-all group mt-[5px] border-t border-bs-bg dark:border-bs-dark2 pt-[15px]">
               <div className="flex items-center gap-[12px]">
                 <span className="w-[32px] h-[32px] flex items-center justify-center rounded-full bg-[#FFEBEB] dark:bg-bs-dark2">
                   <BsIcon name="logout" size={18} />
                 </span>
                 <span className="text-[14px] font-medium text-[#FF3737] font-[Poppins]">Logout</span>
               </div>
-            </a>
+            </button>
           </li>
         </ul>
       </div>
@@ -142,7 +149,7 @@ function ProfileDropdown({ open }: { open: boolean }) {
 }
 
 // ─── Main Navbar ──────────────────────────────────────────────────────────
-export function FeedNavbar() {
+export function FeedNavbar({ user }: { user?: any }) {
   const [notifyOpen, setNotifyOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const notifyRef = useRef<HTMLDivElement>(null);
@@ -161,7 +168,7 @@ export function FeedNavbar() {
 
   return (
     <nav className="w-full bg-white dark:bg-bs-dark1 border-b border-bs-bg dark:border-bs-dark2 fixed top-0 left-0 z-50 transition-colors">
-      <div className="max-w-[1300] mx-auto">
+      <div className="max-w-[1440px] md:px-16 px-4 mx-auto">
         {/* Navigation Wrapper matching _header_inner_wrap padding 27px 0 29px */}
         <div className="flex items-center justify-between py-5 relative px-4 sm:px-0">
           
@@ -240,20 +247,16 @@ export function FeedNavbar() {
                 setNotifyOpen(false);
               }}
             >
-              <img
-                src="/assets/images/profile.png"
-                alt="Profile"
-                className="w-[24px] h-[24px] rounded-full object-cover border border-bs-bg dark:border-bs-dark2"
-              />
+              <UserProfileImage src={user?.image} name={user ? (user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim()) : undefined} size={24} />
               <div className="hidden md:flex items-center">
                 <span className="text-[16px] font-normal text-bs-muted font-[Poppins]">
-                  Dylan Field
+                  {user ? (user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim()) : "Guest"}
                 </span>
                 <div className="ml-[8px] mt-[-3px]">
                   <BsIcon name="chevron-down" size={10} />
                 </div>
               </div>
-              <ProfileDropdown open={profileOpen} />
+              <ProfileDropdown open={profileOpen} user={user} setDropOpen={setProfileOpen} />
             </div>
           </div>
         </div>

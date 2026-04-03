@@ -6,8 +6,8 @@ let server: Server;
 
 async function bootstrap() {
   try {
-    server = app.listen(config.port, () => {
-      console.log(`🚀 Server is running on http://localhost:${config.port}`);
+    server = app.listen(config.port as number, () => {
+      console.log(`🚀 Local: http://localhost:${config.port}`);
     });
 
     const exitHandler = () => {

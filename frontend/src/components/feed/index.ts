@@ -7,3 +7,4 @@ export { FeedCreatePost } from "./feed-create-post";
 export { PostCard } from "./feed-post-card";
 export { FeedMobileNav } from "./feed-mobile-nav";
 export { ThemeToggle } from "./theme-toggle";
+export { FeedTimeline } from "./feed-timeline";

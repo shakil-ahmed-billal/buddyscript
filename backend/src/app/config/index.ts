@@ -13,4 +13,16 @@ export default {
     jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
     better_auth_base_url: process.env.BETTER_AUTH_BASE_URL,
     client_url: process.env.CLIENT_URL,
+    email_sender: {
+        smtp_user: process.env.EMAIL_SENDER_SMTP_USER,
+        smtp_pass: process.env.EMAIL_SENDER_SMTP_PASS,
+        smtp_host: process.env.EMAIL_SENDER_SMTP_HOST,
+        smtp_port: process.env.EMAIL_SENDER_SMTP_PORT || '465',
+        smtp_from: process.env.EMAIL_SENDER_SMTP_FROM,
+    },
+    cloudinary: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    }
 };

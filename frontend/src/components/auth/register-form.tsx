@@ -5,9 +5,44 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import { registerAction } from "@/services/auth.actions";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 export function RegisterForm() {
   const [agreed, setAgreed] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!agreed) {
+      toast.error("Please agree to the terms & conditions");
+      return;
+    }
+    const formData = new FormData(e.currentTarget);
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const repeatPassword = formData.get("repeatPassword") as string;
+
+    if (password !== repeatPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+    const result = await registerAction({ firstName, lastName, email, password });
+    setLoading(false);
+
+    if (result.success) {
+      toast.success("Successfully registered! Redirecting...");
+      router.push("/");
+    } else {
+      toast.error(result.message || "Registration failed");
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-bs-bg relative overflow-hidden font-[Poppins,sans-serif]">
@@ -65,12 +100,37 @@ export function RegisterForm() {
               </div>
 
               {/* Form */}
-              <form className="space-y-3">
+              <form className="space-y-3" onSubmit={handleSubmit}>
+                <div className="flex gap-2">
+                  {/* First Name */}
+                  <div className="space-y-1.5 flex-1">
+                    <Label className="text-bs-text text-sm font-medium">First name</Label>
+                    <Input
+                      name="firstName"
+                      required
+                      placeholder="First name"
+                      className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                  {/* Last Name */}
+                  <div className="space-y-1.5 flex-1">
+                    <Label className="text-bs-text text-sm font-medium">Last name</Label>
+                    <Input
+                      name="lastName"
+                      required
+                      placeholder="Last name"
+                      className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                </div>
+
                 {/* Email */}
                 <div className="space-y-1.5">
                   <Label className="text-bs-text text-sm font-medium">Email</Label>
                   <Input
+                    name="email"
                     type="email"
+                    required
                     placeholder="Enter your email"
                     className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
                   />
@@ -81,6 +141,9 @@ export function RegisterForm() {
                   <Label className="text-bs-text text-sm font-medium">Password</Label>
                   <Input
                     type="password"
+                    name="password"
+                    required
+                    minLength={6}
                     placeholder="Create a password"
                     className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
                   />
@@ -91,6 +154,9 @@ export function RegisterForm() {
                   <Label className="text-bs-text text-sm font-medium">Repeat Password</Label>
                   <Input
                     type="password"
+                    name="repeatPassword"
+                    required
+                    minLength={6}
                     placeholder="Confirm your password"
                     className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
                   />
@@ -113,9 +179,10 @@ export function RegisterForm() {
                 <div className="pt-6 pb-4">
                   <button
                     type="submit"
-                    className="w-full h-12 bg-bs-primary hover:bg-[#0d7de8] text-white font-medium text-base rounded-[6px] transition-all duration-300 hover:shadow-lg"
+                    disabled={loading}
+                    className="w-full h-12 bg-bs-primary disabled:opacity-50 hover:bg-[#0d7de8] text-white font-medium text-base rounded-[6px] transition-all duration-300 hover:shadow-lg"
                   >
-                    Register now
+                    {loading ? "Registering..." : "Register now"}
                   </button>
                 </div>
               </form>

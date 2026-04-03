@@ -1,5 +1,5 @@
-import { FeedMobileNav, FeedNavbar, ThemeToggle } from "@/components/feed";
-import { getSession } from "@/lib/session";
+import { FeedMobileNav, FeedNavbar, ThemeToggle } from "@/components/feed/index";
+import { getUserInfo } from "@/services/auth.actions";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export default async function MainLayout({
@@ -7,7 +7,7 @@ export default async function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getSession();
+  const user = await getUserInfo();
 
   return (
     <ThemeProvider
@@ -21,7 +21,7 @@ export default async function MainLayout({
         <ThemeToggle />
 
         {/* Top Navbar */}
-        <FeedNavbar />
+        <FeedNavbar user={user} />
 
         {/* Main Content Area */}
         <main className="flex-1 pt-[100px] overflow-hidden">

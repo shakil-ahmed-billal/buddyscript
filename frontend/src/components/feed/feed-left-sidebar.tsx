@@ -1,12 +1,13 @@
-"use client";
-
-import Link from "next/link";
 import { BsIcon } from "@/components/ui/bs-icons";
-
-import { exploreItems, leftSuggestedPeople, events } from "@/data/mock-data";
+import Link from "next/link";
+import { getSuggestedPeople } from "@/services/user.actions";
+import { events, exploreItems } from "@/data/mock-data";
+import { UserProfileImage } from "@/components/ui/user-profile-image";
 
 // ─── Left Sidebar Component ───────────────────────────────────────────────
-export function FeedLeftSidebar() {
+export async function FeedLeftSidebar() {
+  const leftSuggestedPeople = await getSuggestedPeople();
+
   return (
     <aside className="hidden lg:flex flex-col gap-[16px] w-full">
       {/* ── Explore Card ── */}
@@ -41,17 +42,17 @@ export function FeedLeftSidebar() {
           <Link href="#0" className="text-[12px] font-medium text-bs-primary leading-[18px] font-[Poppins]">See All</Link>
         </div>
         <div className="space-y-[24px]">
-          {leftSuggestedPeople.map((person) => (
+          {leftSuggestedPeople.map((person: any) => (
             <div key={person.name} className="flex items-center justify-between">
               <div className="flex items-center flex-1">
-                <Link href={person.href} className="mr-[16px]">
-                  <img src={person.img} alt={person.name} className="w-[40px] h-[40px] rounded-full object-cover shrink-0 border border-bs-bg dark:border-bs-dark2" />
+                <Link href={`/profile/${person.id}`} className="mr-[16px]">
+                  <UserProfileImage src={person.image} name={person.name} size={40} />
                 </Link>
                 <div className="flex-1">
-                  <Link href={person.href}>
+                  <Link href={`/profile/${person.id}`}>
                     <h4 className="text-[14px] font-medium text-bs-dark dark:text-bs-text font-[Poppins] leading-[1.1] hover:text-bs-primary transition-colors">{person.name}</h4>
                   </Link>
-                  <p className="text-[11px] font-light text-bs-muted font-[Poppins] leading-[1.4] mt-[4px]">{person.role}</p>
+                  <p className="text-[11px] font-light text-bs-muted font-[Poppins] leading-[1.4] mt-[4px]">{person.position || person.role}</p>
                 </div>
               </div>
               <a href="#0" className="_bs_suggested_btn_outline text-[12px] text-[#959EAE] dark:text-bs-muted font-medium font-[Poppins] border border-[#DCDFE4] dark:border-bs-dark3 bg-white dark:bg-bs-dark2 rounded-[2px] py-[7px] px-[7px] hover:text-white dark:hover:text-white hover:bg-bs-primary hover:border-bs-primary transition-all">

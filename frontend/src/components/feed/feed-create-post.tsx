@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useCreatePost } from "@/hooks/useFeed";
 import { Textarea } from "@/components/ui/textarea";
+import { UserProfileImage } from "@/components/ui/user-profile-image";
 
 // ─── Action Buttons Data ──────────────────────────────────────────────────
 const actions = [
@@ -25,7 +27,7 @@ const actions = [
     label: "Event",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
-        <path fill="currentColor" d="M14.371 2c.32 0 .585.262.627.603l.005.095v.788c2.598.195 4.188 2.033 4.18 5v8.488c0 3.145-1.786 5.026-4.656 5.026H7.395C4.53 22 2.74 20.087 2.74 16.904V8.486c0-2.966 1.596-4.804 4.187-5v-.788c0-.386.283-.698.633-.698zm0 1.448h-6.22V5.1c0 .385-.285.698-.637.698-.32 0-.585-.262-.628-.602l-.005-.096V3.448h-.062c-2.029 0-2.73 1.205-2.73 3.551v8.488h11v-8.486c0-2.345-.7-3.551-2.718-3.551zm-7.058 6.046c.323 0 .589.263.632.604l.006.094v1.205c0 .386-.286.698-.638.698-.323 0-.59-.263-.632-.604l-.006-.094V10.19c0-.385.285-.697.638-.697zm6.756-.041c.323 0 .59.262.633.604l.005.094v1.205c0 .385-.286.697-.638.697-.323 0-.59-.262-.633-.603l-.005-.095v-1.205c0-.385.286-.697.638-.697zm-3.37.041c.323 0 .59.263.632.604l.006.094v1.205c0 .386-.285.698-.638.698-.323 0-.59-.263-.632-.604l-.006-.094V10.19c0-.385.286-.697.638-.697zm0 2.946c.323 0 .59.262.632.603l.006.095v1.22c0 .386-.285.698-.638.698s-.638-.312-.638-.698v-1.22c0-.34.258-.621.583-.69l.055-.008zm3.37-.04c.323 0 .59.262.633.603l.005.095v1.22c0 .385-.286.698-.638.698-.323 0-.59-.262-.633-.603l-.005-.095v-1.22c0-.385.286-.697.638-.697zm-6.756.04c.323 0 .589.263.632.604l.006.094v1.22c0 .385-.286.698-.638.698-.323 0-.59-.263-.632-.604l-.006-.094v-1.22c0-.385.285-.697.638-.697z" />
+        <path fill="currentColor" d="M14.371 2c.32 0 .585.262.627.603l.005.095v.788c2.598.195 4.188 2.033 4.18 5v8.488c0 3.145-1.786 5.026-4.656 5.026H7.395C4.53 22 2.74 20.087 2.74 16.904V8.486c0-2.966 1.596-4.804 4.187-5v-.788c0-.386.283-.698.633-.698.32 0 .584.262.626.603l.006.095v.771h5.546v-.771c0-.386.284-.698.633-.698zm3.546 8.283H4.004l.001 6.621c0 2.325 1.137 3.616 3.183 3.697l.207.004h7.132c2.184 0 3.39-1.271 3.39-3.63v-6.692zm-3.202 5.853c.349 0 .632.312.632.698 0 .353-.238.645-.546.691l-.086.006c-.357 0-.64-.312-.64-.697 0-.354.237-.645.546-.692l.094-.006zm-3.742 0c.35 0 .632.312.632.698 0 .353-.238.645-.546.691l-.086.006c-.357 0-.64-.312-.64-.697 0-.354.238-.645.546-.692l.094-.006zm-3.75 0c.35 0 .633.312.633.698 0 .353-.238.645-.547.691l-.093.006c-.35 0-.633-.312-.633-.697 0-.354.238-.645.547-.692l.094-.006zm7.492-3.615c.349 0 .632.312.632.697 0 .354-.238.645-.546.692l-.086.006c-.357 0-.64-.312-.64-.698 0-.353.237-.645.546-.691l.094-.006zm-3.742 0c.35 0 .632.312.632.697 0 .354-.238.645-.546.692l-.086.006c-.357 0-.64-.312-.64-.698 0-.353.238-.645.546-.691l.094-.006zm-3.75 0c.35 0 .633.312.633.697 0 .354-.238.645-.547.692l-.093.006c-.35 0-.633-.312-.633-.698 0-.353.238-.645.547-.691l.094-.006zm6.515-7.657H8.192v.895c0 .385-.283.698-.633.698-.32 0-.584-.263-.626-.603l-.006-.095v-.874c-1.886.173-2.922 1.422-2.922 3.6v.402h13.912v-.403c.007-2.181-1.024-3.427-2.914-3.599v.874c0 .385-.283.698-.632.698-.32 0-.585-.263-.627-.603l-.005-.095v-.895z" />
       </svg>
     ),
   },
@@ -40,8 +42,18 @@ const actions = [
 ];
 
 // ─── Create Post Component ────────────────────────────────────────────────
-export function FeedCreatePost() {
+export function FeedCreatePost({ user }: { user?: any }) {
   const [text, setText] = useState("");
+  const { mutate: createPostMutate, isPending } = useCreatePost();
+
+  const handleCreatePost = () => {
+    if (!text.trim()) return;
+    createPostMutate({ content: text }, {
+      onSuccess: () => {
+        setText("");
+      }
+    });
+  };
 
   return (
     <div className="bg-white rounded-[6px] mb-[24px] border border-bs-bg">
@@ -49,11 +61,7 @@ export function FeedCreatePost() {
         {/* Textarea Area */}
         <div className="flex items-start">
           <div className="mr-[12px]">
-            <img
-              src="/assets/images/txt_img.png"
-              alt="You"
-              className="w-[43px] h-[43px] rounded-full object-cover shrink-0"
-            />
+            <UserProfileImage src={user?.image} name={user?.name || `${user?.firstName || ""} ${user?.lastName || ""}`.trim()} size={43} />
           </div>
           <div className="flex-1">
             <textarea
@@ -90,12 +98,20 @@ export function FeedCreatePost() {
         {/* Post Button */}
         <button
           type="button"
-          className="flex items-center gap-[6px] bg-bs-primary hover:bg-[#1580E0] text-white font-medium text-[14px] font-[Poppins] px-[24px] py-[10px] rounded-[6px] transition-all"
+          onClick={handleCreatePost}
+          disabled={isPending || !text.trim()}
+          className="flex items-center gap-[6px] bg-bs-primary hover:bg-[#1580E0] disabled:opacity-50 text-white font-medium text-[14px] font-[Poppins] px-[24px] py-[10px] rounded-[6px] transition-all"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" fill="none" viewBox="0 0 14 13">
-            <path fill="#fff" fillRule="evenodd" d="M6.37 7.879l2.438 3.955a.335.335 0 00.34.162c.068-.01.23-.05.289-.247l3.049-10.297a.348.348 0 00-.09-.35.341.341 0 00-.34-.088L1.75 4.03a.34.34 0 00-.247.289.343.343 0 00.16.347L5.666 7.17 9.2 3.597a.5.5 0 01.712.703L6.37 7.88z" clipRule="evenodd" />
-          </svg>
-          <span className="pb-px">Post</span>
+          {isPending ? (
+            <span className="pb-px">Posting...</span>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" fill="none" viewBox="0 0 14 13">
+                <path fill="#fff" fillRule="evenodd" d="M6.37 7.879l2.438 3.955a.335.335 0 00.34.162c.068-.01.23-.05.289-.247l3.049-10.297a.348.348 0 00-.09-.35.341.341 0 00-.34-.088L1.75 4.03a.34.34 0 00-.247.289.343.343 0 00.16.347L5.666 7.17 9.2 3.597a.5.5 0 01.712.703L6.37 7.88z" clipRule="evenodd" />
+              </svg>
+              <span className="pb-px">Post</span>
+            </>
+          )}
         </button>
       </div>
     </div>

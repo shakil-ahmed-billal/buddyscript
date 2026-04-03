@@ -1,13 +1,48 @@
-"use server";
-import { cookies } from "next/headers";
+"use server"
 
-export async function setTokenInCookies(name: string, token: string, maxAge?: number) {
-  const cookieStore = await cookies();
-  cookieStore.set(name, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    path: "/",
-    maxAge: maxAge || 3600,
-  });
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { setCookie } from "./cookieUtils";
+
+const getTokenSecondsRemaining = (token: string): number => {
+    if (!token) return 0;
+    try {
+        const tokenPayload = jwt.decode(token) as JwtPayload;
+
+        if (tokenPayload && !tokenPayload.exp) {
+            return 0;
+        }
+
+        const remainingSeconds = (tokenPayload.exp as number) - Math.floor(Date.now() / 1000)
+
+        return remainingSeconds > 0 ? remainingSeconds : 0;
+
+    } catch (error) {
+        console.error("Error decoding token:", error);
+        return 0;
+    }
+}
+
+export const setTokenInCookies = async (
+    name: string,
+    token: string,
+    fallbackMaxAgeInSeconds = 60 * 60 * 24 // 1 day
+) => {
+    let maxAgeInSeconds;
+
+    // session token might not be a JWT with exp, so we use fallback
+    if (name !== "better-auth.session_token") {
+        maxAgeInSeconds = getTokenSecondsRemaining(token);
+    }
+
+    await setCookie(name, token, maxAgeInSeconds || fallbackMaxAgeInSeconds);
+}
+
+export async function isTokenExpiringSoon(token: string, thresholdInSeconds = 300): Promise<boolean> {
+    const remainingSeconds = getTokenSecondsRemaining(token);
+    return remainingSeconds > 0 && remainingSeconds <= thresholdInSeconds;
+}
+
+export async function isTokenExpired(token: string): Promise<boolean> {
+    const remainingSeconds = getTokenSecondsRemaining(token);
+    return remainingSeconds === 0;
 }
