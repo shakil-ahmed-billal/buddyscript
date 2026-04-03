@@ -90,7 +90,8 @@ export async function proxy(request: NextRequest) {
             return NextResponse.redirect(loginUrl);
         }
 
-        // 6. Mandatory state enforcement (email verification)
+        // 6. Mandatory state enforcement (email verification) - DISABLED as per user request
+        /*
         if (accessToken) {
             const userInfo = await getUserInfo();
             if (userInfo) {
@@ -108,6 +109,7 @@ export async function proxy(request: NextRequest) {
                 }
             }
         }
+        */
 
         // 7. Role-based access control
         if (routeOwner === "ADMIN" || routeOwner === "USER") {

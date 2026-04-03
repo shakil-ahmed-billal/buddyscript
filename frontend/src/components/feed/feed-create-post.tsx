@@ -28,15 +28,45 @@ const actions = [
 // ─── Create Post Component ────────────────────────────────────────────────
 export function FeedCreatePost({ user }: { user?: any }) {
   const [text, setText] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  
   const { mutate: createPostMutate, isPending } = useCreatePost();
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleCreatePost = () => {
-    if (!text.trim()) return;
-    createPostMutate({ content: text }, {
+    if (!text.trim() && !image) return;
+    
+    const formData = new FormData();
+    formData.append("content", text);
+    if (image) {
+      formData.append("image", image);
+    }
+
+    createPostMutate(formData, {
       onSuccess: () => {
         setText("");
+        setImage(null);
+        setImagePreview(null);
       }
     });
+  };
+
+  const fileInputRef = (instance: HTMLInputElement | null) => {
+    if (instance) {
+       // logic to trigger from button
+    }
   };
 
   return (
@@ -57,6 +87,19 @@ export function FeedCreatePost({ user }: { user?: any }) {
             />
           </div>
         </div>
+
+        {/* Image Preview */}
+        {imagePreview && (
+          <div className="mt-4 relative group">
+            <img src={imagePreview} alt="Preview" className="max-h-[300px] w-full object-cover rounded-[6px] border border-bs-bg dark:border-bs-dark2" />
+            <button 
+              onClick={() => { setImage(null); setImagePreview(null); }}
+              className="absolute top-2 right-2 bg-bs-dark/50 text-white p-1 rounded-full hover:bg-bs-dark transition-all"
+            >
+              <BsIcon name="close" size={16} />
+            </button>
+          </div>
+        )}
       </div>
 
       <hr className="border-t border-bs-bg dark:border-bs-dark2 mx-[24px]" />
@@ -65,10 +108,22 @@ export function FeedCreatePost({ user }: { user?: any }) {
       <div className="px-[24px] py-[16px] flex flex-wrap items-center justify-between gap-y-4">
         {/* Action Buttons */}
         <div className="flex items-center gap-[24px]">
+          <input 
+            type="file" 
+            id="post-image-upload" 
+            className="hidden" 
+            accept="image/*"
+            onChange={handleImageChange}
+          />
           {actions.map((action) => (
             <button
               key={action.label}
               type="button"
+              onClick={() => {
+                if (action.label === "Photo") {
+                  document.getElementById("post-image-upload")?.click();
+                }
+              }}
               className="flex items-center gap-[10px] text-[#767676] dark:text-bs-muted text-[14px] font-medium font-[Poppins] hover:text-bs-primary transition-all group"
             >
               <BsIcon name={action.iconName} size={20} className="text-[#888]" />
@@ -81,7 +136,7 @@ export function FeedCreatePost({ user }: { user?: any }) {
         <button
           type="button"
           onClick={handleCreatePost}
-          disabled={isPending || !text.trim()}
+          disabled={isPending || (!text.trim() && !image)}
           className="flex items-center gap-[6px] bg-bs-primary hover:bg-[#1580E0] disabled:opacity-50 text-white font-medium text-[14px] font-[Poppins] px-[24px] py-[10px] rounded-[6px] transition-all"
         >
           {isPending ? (

@@ -26,4 +26,9 @@ router.post(
   PostController.toggleLikePost
 );
 
+router.delete(
+  "/:id",
+  PostController.deletePost
+);
+
 export const PostRoutes = router;

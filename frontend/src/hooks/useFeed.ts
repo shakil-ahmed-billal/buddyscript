@@ -16,8 +16,26 @@ export const useFeedPosts = () => {
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: { content?: string; image?: string; visibility?: "PUBLIC" | "PRIVATE" }) => {
-      const response: any = await httpClient.post("/api/v1/posts", payload);
+    mutationFn: async (payload: FormData) => {
+      const response: any = await httpClient.post("/api/v1/posts", payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["feedPosts"] });
+    },
+  });
+};
+
+// Delete a Post
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (postId: string) => {
+      const response: any = await httpClient.delete(`/api/v1/posts/${postId}`);
       return response;
     },
     onSuccess: () => {

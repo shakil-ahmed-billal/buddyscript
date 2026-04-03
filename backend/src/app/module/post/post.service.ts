@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../errorHelpers/ApiError.js";
 import httpStatus from "http-status";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config.js";
 
 const createPost = async (userId: string, payload: { content?: string; image?: string; visibility?: "PUBLIC" | "PRIVATE" }) => {
   const result = await prisma.post.create({
@@ -39,15 +40,33 @@ const getFeed = async (userId: string) => {
       author: {
         select: { id: true, name: true, firstName: true, lastName: true, image: true }
       },
-      likes: true,
+      likes: {
+        include: {
+          user: {
+            select: { id: true, name: true, firstName: true, lastName: true, image: true }
+          }
+        }
+      },
       comments: {
         include: {
           author: { select: { id: true, name: true, firstName: true, lastName: true, image: true } },
-          likes: true,
+          likes: {
+            include: {
+              user: {
+                select: { id: true, name: true, firstName: true, lastName: true, image: true }
+              }
+            }
+          },
           replies: {
             include: {
               author: { select: { id: true, name: true, firstName: true, lastName: true, image: true } },
-              likes: true
+              likes: {
+                include: {
+                  user: {
+                    select: { id: true, name: true, firstName: true, lastName: true, image: true }
+                  }
+                }
+              }
             }
           }
         },
@@ -59,6 +78,27 @@ const getFeed = async (userId: string) => {
     }
   });
   return posts;
+};
+
+const deletePost = async (userId: string, postId: string) => {
+  const post = await prisma.post.findUnique({ where: { id: postId } });
+  if (!post) throw new AppError(httpStatus.NOT_FOUND, "Post not found");
+  
+  if (post.authorId !== userId) {
+    throw new AppError(httpStatus.FORBIDDEN, "You can only delete your own posts");
+  }
+
+  // Delete image from Cloudinary if it exists
+  if (post.image) {
+    try {
+      await deleteFileFromCloudinary(post.image);
+    } catch (error) {
+      console.error("Cloudinary deletion failed, proceeding with DB deletion:", error);
+    }
+  }
+
+  await prisma.post.delete({ where: { id: postId } });
+  return { id: postId };
 };
 
 const toggleLikePost = async (userId: string, postId: string) => {
@@ -91,5 +131,6 @@ const toggleLikePost = async (userId: string, postId: string) => {
 export const PostService = {
   createPost,
   getFeed,
-  toggleLikePost
+  toggleLikePost,
+  deletePost
 };
