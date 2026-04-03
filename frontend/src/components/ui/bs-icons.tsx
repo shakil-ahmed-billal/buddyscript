@@ -1,7 +1,46 @@
 import React from "react";
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: "home" | "explore" | "videos" | "photos" | "friends" | "bookmarks" | "gaming" | "settings" | "save" | "bell" | "chat" | "search" | "chevron-down" | "more-vertical" | "photo-fill" | "video-fill" | "event-fill" | "article-fill" | "send-fill" | "like" | "comment" | "share" | "globe" | "help" | "logout" | "close" | "plus" | "feed" | "event" | "watch" | "files" | "marketplace" | "artical" | "haha" | "insights";
+  name: 
+    | "home" 
+    | "explore" 
+    | "friends" 
+    | "bell" 
+    | "chat" 
+    | "settings" 
+    | "help" 
+    | "logout" 
+    | "search" 
+    | "plus" 
+    | "chevron-down" 
+    | "more-vertical" 
+    | "photo" 
+    | "video" 
+    | "event" 
+    | "article" 
+    | "send" 
+    | "menu"
+    | "feed"
+    | "watch"
+    | "files"
+    | "marketplace"
+    | "insights"
+    | "bookmarks"
+    | "gaming"
+    | "save"
+    | "haha"
+    | "like"
+    | "comment"
+    | "share"
+    | "close"
+    | "globe"
+    | "photo-fill"
+    | "video-fill"
+    | "event-fill"
+    | "article-fill"
+    | "send-fill"
+    | "videos"
+    | "photos";
   size?: number;
   active?: boolean;
 }
@@ -56,7 +95,7 @@ export const BsIcon = ({ name, size = 20, active = false, className = "", ...pro
           <path d="M12 2c5.441 0 9.851 4.477 9.851 10 0 5.523-4.41 10-9.851 10s-9.85-4.477-9.85-10c0-5.523 4.41-10 9.85-10zm0 1.448c-4.636 0-8.396 3.829-8.396 8.552s3.76 8.552 8.396 8.552 8.396-3.829 8.396-8.552-3.76-8.552-8.396-8.552zm3.328 8.163l.113.067.112.073c.48.337.48.86 0 1.196-.06.042-.14.092-.225.14l-4.526 2.656a1.144 1.144 0 01-1.745-.989v-5.215a1.14 1.14 0 011.758-.98l4.513 3.052z" fill={color} />
         </svg>
       );
-    case "artical":
+    case "article":
       return (
         <svg width={size} height={size} viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
           <path d="M15.908 2c.671 0 1.315.267 1.784.74.468.473.72 1.112.699 1.709l.009.14a.985.985 0 00.136.395c.145.242.382.418.659.488.277.071.57.03.849-.13l.156-.078c1.164-.538 2.563-.11 3.209.991l.581.99a.695.695 0 01.04.081l.054.107c.52 1.089.15 2.385-.838 3.043l-.243.15a1.046 1.046 0 00-.313.339 1.041 1.041 0 00-.11.805c.074.272.254.504.53.66l.157.1c.478.328.824.812.973 1.367.171.626.08 1.292-.257 1.86l-.624 1.022-.095.144c-.734 1.038-2.159 1.355-3.247.738l-.13-.066a1.122 1.122 0 00-.411-.095 1.087 1.087 0 00-.766.31c-.204.2-.317.471-.316.786l-.008.163C16.279 18.022 15.204 19 13.908 19h-1.17c-1.373 0-2.486-1.093-2.484-2.398l-.008-.14a.994.994 0 00-.14-.401 1.066 1.066 0 00-.652-.493 1.12 1.12 0 00-.853.127l-.168.083a2.527 2.527 0 01-1.699.122 2.47 2.47 0 01-1.487-1.154l-.604-1.024-.081-.152a2.404 2.404 0 01.975-3.132l.1-.061c.292-.199.467-.527.467-.877 0-.381-.207-.733-.568-.94l-.147-.092a2.42 2.42 0 01-.725-3.236l.615-.993a2.502 2.502 0 013.366-.912l.126.066c.13.058.269.089.403.09a1.08 1.08 0 001.085-1.068l.009-.185c.048-.57.3-1.106.713-1.513A2.5 2.5 0 0112.738 0h1.17zM13.908 6.396a3.105 3.105 0 100 6.21 3.105 3.105 0 000-6.21z" fill={color} />
@@ -65,7 +104,7 @@ export const BsIcon = ({ name, size = 20, active = false, className = "", ...pro
     case "home":
       return (
         <svg width={size} height={size} viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-          <path d="M1 9.924c0-1.552 0-2.328.314-3.01.313-.682.902-1.187 2.08-2.196l1.143-.98C6.667 1.913 7.732 1 9 1c1.268 0 2.333.913 4.463 2.738l1.142.98c1.179 1.01 1.768 1.514 2.081 2.196.314.682.314 1.458.314 3.01v4.846c0 2.155 0 3.233-.67 3.902-.669.67-1.746.67-3.901.67H5.57c-2.155 0-3.232 0-3.902-.67C1 18.002 1 16.925 1 14.77V9.924z" stroke={color} strokeOpacity={opacity} strokeWidth="1.5" />
+          <path d="M1 9.924c0-1.552 0-2.328.314-3.01.313-.682.902-1.187 2.08-2.196l1.143-.98C6.667 1.913 7.732 1 9 1c1.268 0 2.333.913 4.463 2.738l1.142.98c1.179 1.01 1.768 1.514 2.081 2.196.314.682.314 1.458.314 3.01v4.846c0 2.155 0 3.233-.67 3.902-.669.67-1.746.67-3.901.67H5.57c-2.155 0-3.232 0-3.902-.67C1 18.002 1 16.925 1 14.77V9.924z" stroke={color} fillOpacity={opacity} strokeWidth="1.5" />
           <path d="M11.857 19.341v-5.857a1 1 0 00-1-1H7.143a1 1 0 00-1 1v5.857" stroke={color} strokeOpacity={opacity} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
@@ -129,8 +168,8 @@ export const BsIcon = ({ name, size = 20, active = false, className = "", ...pro
       );
     case "logout":
       return (
-        <svg width={size} height={size} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-          <path d="M11.25 6.75L15 10.5m0 0l-3.75 3.75M15 10.5H6.75m0-7.5h-1.5A2.25 2.25 0 003 5.25v10.5A2.25 2.25 0 005.25 18h1.5" stroke="#FF3737" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width={size} height={size} viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+          <path stroke={color} strokeOpacity={opacity} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M6.667 18H2.889A1.889 1.889 0 011 16.111V2.89A1.889 1.889 0 012.889 1h3.778M13.277 14.222L18 9.5l-4.723-4.722M18 9.5H6.667" />
         </svg>
       );
     case "close":
@@ -151,14 +190,14 @@ export const BsIcon = ({ name, size = 20, active = false, className = "", ...pro
     case "comment":
       return (
         <svg width={size} height={size} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-          <path d="M1 10.5c0-.464 0-.696.009-.893A9 9 0 019.607 1.01C9.804 1 10.036 1 10.5 1v0c.464 0 .696 0 .893.009a9 9 0 018.598 8.598c.009.197.009.429.009.893v6.046c0 1.36 0 2.041-.317 2.535a2 2 0 01-.602.602c-.494.317-1.174.317-2.535.317H10.5c-.464 0-.696 0-.893-.009a9 9 0 01-8.598-8.598C1 11.196 1 10.964 1 10.5v0z" stroke={color} strokeWidth="1.5" />
-          <path d="M6.938 9.313h7.125M10.5 14.063h3.563" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M1 10.5c0-.464 0-.696.009-.893A9 9 0 019.607 1.01C9.804 1 10.036 1 10.5 1v0c.464 0 .696 0 .893.009a9 9 0 018.598 8.598c.009.197.009.429.009.893v6.046c0 1.36 0 2.041-.317 2.535a2 2 0 01-.602.602c-.494.317-1.174.317-2.535.317H10.5c-.464 0-.696 0-.893-.009a9 9 0 01-8.598-8.598C1 11.196 1 10.964 1 10.5v0z" stroke={color} strokeOpacity={opacity} strokeWidth="1.5" />
+          <path d="M6.938 9.313h7.125M10.5 14.063h3.563" stroke={color} strokeOpacity={opacity} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
     case "share":
       return (
         <svg width={size} height={size} viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-          <path d="M23 10.5L12.917 1v5.429C3.267 6.429 1 13.258 1 20c2.785-3.52 5.248-5.429 11.917-5.429V20L23 10.5z" stroke={color} strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M23 10.5L12.917 1v5.429C3.267 6.429 1 13.258 1 20c2.785-3.52 5.248-5.429 11.917-5.429V20L23 10.5z" stroke={color} strokeOpacity={opacity} strokeWidth="1.5" strokeLinejoin="round" />
         </svg>
       );
     case "plus":
@@ -211,10 +250,16 @@ export const BsIcon = ({ name, size = 20, active = false, className = "", ...pro
           <path d="M7 3 7 8 15 8" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
-    case "gaming":
+    case "menu":
       return (
-        <svg width={size} height={size} viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-          <path d="M7.625 2c.315-.015.642.306.645.69.003.309.234.558.515.558h.928c1.317 0 2.402 1.169 2.419 2.616v.24h2.604c2.911-.026 5.255 2.337 5.377 5.414.005.12.006.245.004.368v4.31c.062 3.108-2.21 5.704-5.064 5.773-.117.003-.228 0-.34-.005a199.325 199.325 0 01-7.516 0c-2.816.132-5.238-2.292-5.363-5.411a6.262 6.262 0 01-.004-.371V11.87c-.03-1.497.48-2.931 1.438-4.024.956-1.094 2.245-1.714 3.629-1.746a3.28 3.28 0 01.342.005l3.617-.001v-.231c-.008-.676-.522-1.23-1.147-1.23h-.93c-.973 0-1.774-.866-1.785-1.937-.003-.386.28-.701.631-.705zm-.614 5.494h-.084C5.88 7.52 4.91 7.987 4.19 8.812c-.723.823-1.107 1.904-1.084 3.045v4.34c-.002.108 0 .202.003.294.094 2.353 1.903 4.193 4.07 4.08 2.487.046 5.013.046 7.55-.001.124.006.212.007.3.004 2.147-.05 3.86-2.007 3.812-4.361V11.87a5.027 5.027 0 00-.002-.291c-.093-2.338-1.82-4.082-4.029-4.082l-.07.002H7.209a4.032 4.032 0 00-.281-.004l.084-.001zm1.292 4.091c.341 0 .623.273.667.626l.007.098-.001 1.016h.946c.372 0 .673.325.673.725 0 .366-.253.669-.582.717l-.091.006h-.946v1.017c0 .4-.3.724-.673.724-.34 0-.622-.273-.667-.626l-.006-.098v-1.017h-.945c-.372 0-.674-.324-.674-.723 0-.367.254-.67.582-.718l.092-.006h.945v-1.017c0-.4.301-.724.673-.724zm7.058 3.428c.372 0 .674.324.674.724 0 .366-.254.67-.582.717l-.091.007h-.09c-.373 0-.674-.324-.674-.724 0-.367.253-.67.582-.717l.091-.007h.09zm-1.536-3.322c.372 0 .673.324.673.724 0 .367-.253.67-.582.718l-.091.006h-.09c-.372 0-.674-.324-.674-.724 0-.366.254-.67.582-.717l.092-.007h.09z" fill={color} />
+        <svg width={size} height={size} viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+          <path stroke={color} strokeOpacity={opacity} strokeWidth="1.5" strokeLinecap="round" d="M1 1h16M1 7h16M1 13h16" />
+        </svg>
+      );
+    case "globe":
+      return (
+        <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+          <path fill={color} fillOpacity={opacity} fillRule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.371 8a6.629 6.629 0 011.082-3.61c.42.344.975.544 1.547.544h1.034c.591 0 1.07.479 1.07 1.07v1.07c0 .591.479 1.07 1.07 1.07h1.07v1.07c0 .591.478 1.07 1.07 1.07v.228l-.053.037a3.21 3.21 0 00-1.258 2.502v.07a6.628 6.628 0 01-6.632-7.054zm12.519 3.032c-.105-.184-.251-.25-.333-.25h-2.143a1.071 1.071 0 01-1.071-1.071V8c0-.592-.48-1.071-1.072-1.071H8.199V5.857c0-.591-.479-1.071-1.071-1.071h-.536V3.714c0-.591.48-1.071 1.072-1.071h1.071a2.143 2.143 0 002.143-2.143v-.063a6.629 6.629 0 012.569 11.53c-.15-.125-.386-.407-.557-.705z" clipRule="evenodd" />
         </svg>
       );
     default:

@@ -55,15 +55,20 @@ export const logoutAction = async () => {
   try {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+    const accessToken = cookieStore.get("accessToken")?.value;
     
     await fetch(`${BASE_API_URL}/auth/logout`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Cookie: `better-auth.session_token=${sessionToken}`
+            Authorization: `Bearer ${sessionToken}`,
+            "x-access-token": accessToken || "",
+            Cookie: `accessToken=${accessToken}; better-auth.session_token=${sessionToken}`
         }
     });
-  } catch {}
+  } catch (error) {
+    console.error("Logout API error:", error);
+  }
   await deleteCookie("accessToken");
   await deleteCookie("refreshToken");
   await deleteCookie("better-auth.session_token");

@@ -6,7 +6,7 @@ import { friends } from "@/data/mock-data";
 import { UserProfileImage } from "@/components/ui/user-profile-image";
 
 export async function FeedRightSidebar() {
-  const suggestedPeople = await getSuggestedPeople("SUGGESTED");
+  // const suggestedPeople = await getSuggestedPeople("SUGGESTED");
   const youMightLike = await getSuggestedPeople("YOU_MIGHT_LIKE");
 
   return (
@@ -41,7 +41,7 @@ export async function FeedRightSidebar() {
       )}
 
       {/* ── Suggested People Card ── */}
-      {suggestedPeople.length > 0 && (
+      {/* {suggestedPeople.length > 0 && (
         <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] mb-[16px] border border-bs-bg dark:border-bs-dark2 transition-colors">
           <div className="flex items-center justify-between mb-[24px]">
             <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] font-[Poppins]">Suggested People</h4>
@@ -64,7 +64,7 @@ export async function FeedRightSidebar() {
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* ── Your Friends Card ── */}
       <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-bg dark:border-bs-dark2 transition-colors flex flex-col min-h-0">
