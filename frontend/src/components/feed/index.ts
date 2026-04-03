@@ -6,3 +6,4 @@ export { FeedStories } from "./feed-stories";
 export { FeedCreatePost } from "./feed-create-post";
 export { PostCard } from "./feed-post-card";
 export { FeedMobileNav } from "./feed-mobile-nav";
+export { ThemeToggle } from "./theme-toggle";

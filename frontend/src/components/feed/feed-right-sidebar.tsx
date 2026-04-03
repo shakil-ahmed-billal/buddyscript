@@ -1,119 +1,90 @@
+"use client";
+
 import Link from "next/link";
+import { BsIcon } from "@/components/ui/bs-icons";
+import { BsButton, BsInput } from "@/components/ui/bs-shared";
 
-// ─── "You Might Like" People ──────────────────────────────────────────────
+// ─── Suggested People ─────────────────────────────────────────────────────
 const suggestedPeople = [
-  { name: "Radovan SkillArena", role: "Founder & CEO at Trophy", img: "/assets/images/Avatar.png" },
+  {
+    name: "Radovan SkillArena",
+    role: "Founder & CEO at Trophy",
+    img: "/assets/images/Avatar.png",
+    href: "/profile",
+  }
 ];
 
-// ─── Friends list ─────────────────────────────────────────────────────────
+// ─── Friends List ─────────────────────────────────────────────────────────
 const friends = [
-  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", online: false, time: "5 minute ago" },
-  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", online: true },
-  { name: "Dylan Field", role: "CEO of Figma", img: "/assets/images/people3.png", online: true },
-  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", online: false, time: "5 minute ago" },
-  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", online: true },
-  { name: "Dylan Field", role: "CEO of Figma", img: "/assets/images/people3.png", online: true },
-  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", online: false, time: "5 minute ago" },
+  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", lastSeen: "5 minute ago", active: false },
+  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", active: true },
+  { name: "Dylan Field", role: "CEO of Figma", img: "/assets/images/people3.png", active: true },
+  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", lastSeen: "5 minute ago", active: false },
+  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", active: false },
 ];
 
-// ─── Online Status Dot ────────────────────────────────────────────────────
-function OnlineDot() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 14 14" className="shrink-0">
-      <rect width="12" height="12" x="1" y="1" fill="#0ACF83" stroke="#fff" strokeWidth="2" rx="6" />
-    </svg>
-  );
-}
-
-// ─── Search Icon ──────────────────────────────────────────────────────────
-function SearchIcon() {
-  return (
-    <svg className="absolute left-3 top-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 17 17">
-      <circle cx="7" cy="7" r="6" stroke="#666" />
-      <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
-    </svg>
-  );
-}
-
-// ─── Right Sidebar Component ──────────────────────────────────────────────
 export function FeedRightSidebar() {
   return (
-    <aside className="hidden lg:flex flex-col gap-[16px] w-full">
+    <aside className="hidden xl:flex flex-col gap-[16px] w-full max-w-[320px]">
       {/* ── You Might Like Card ── */}
-      <div className="bg-white rounded-[6px] px-[24px] pt-[24px] pb-[24px] border border-bs-bg">
+      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-bg dark:border-bs-dark2 transition-colors">
         <div className="flex items-center justify-between mb-[24px]">
-          <h4 className="text-bs-dark font-semibold text-[18px] font-[Poppins]">You Might Like</h4>
-          <Link href="#0" className="text-[13px] font-medium text-bs-primary hover:underline font-[Poppins]">See All</Link>
+          <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] font-[Poppins]">You Might Like</h4>
+          <Link href="#0" className="text-[12px] font-medium text-bs-primary hover:underline font-[Poppins]">See All</Link>
         </div>
-        <hr className="border-bs-bg mb-[16px] -mx-[24px]" />
-
-        {suggestedPeople.map((person) => (
-          <div key={person.name}>
-            <div className="flex items-center gap-[12px] mb-[16px]">
-              <Link href="/profile">
-                <img src={person.img} alt={person.name} className="w-[42px] h-[42px] rounded-full object-cover shrink-0" />
-              </Link>
-              <div className="flex-1 min-w-0">
-                <Link href="/profile">
-                  <h4 className="text-[14px] font-medium text-bs-dark font-[Poppins] hover:text-bs-primary transition-colors truncate">{person.name}</h4>
-                </Link>
-                <p className="text-[12px] text-bs-muted font-[Poppins] truncate">{person.role}</p>
+        <div className="h-px bg-bs-bg dark:bg-bs-dark2 mb-[24px]" />
+        
+        {suggestedPeople.map((person, i) => (
+          <div key={i} className="space-y-[16px]">
+            <div className="flex items-center gap-[12px]">
+              <img src={person.img} alt={person.name} className="w-[40px] h-[40px] rounded-full object-cover shrink-0 border border-bs-bg dark:border-bs-dark2" />
+              <div>
+                <h4 className="text-[14px] font-medium text-bs-dark dark:text-bs-text font-[Poppins] leading-[1.1]">{person.name}</h4>
+                <p className="text-[11px] font-light text-bs-muted font-[Poppins] leading-[1.4] mt-[4px]">{person.role}</p>
               </div>
             </div>
-            <div className="flex gap-[8px]">
-              <button className="flex-1 py-[6px] border border-[#D9D9D9] rounded-[4px] text-[13px] text-bs-dark font-[Poppins] hover:bg-bs-bg transition-all">
-                Ignore
-              </button>
-              <button className="flex-1 py-[6px] bg-bs-primary border border-bs-primary text-white rounded-[4px] text-[13px] font-[Poppins] hover:bg-[#1580E0] transition-all">
-                Follow
-              </button>
+            <div className="flex items-center gap-[8px]">
+              <BsButton variant="outline" className="_bs_suggested_btn_outline flex-1 py-[10px] text-[12px] font-medium rounded-[2px]">Ignore</BsButton>
+              <BsButton variant="primary" className="flex-1 py-[10px] text-[12px] font-medium rounded-[2px]">Follow</BsButton>
             </div>
           </div>
         ))}
       </div>
 
       {/* ── Your Friends Card ── */}
-      <div className="bg-white rounded-[6px] px-[24px] pt-[24px] pb-[16px] border border-bs-bg">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-[16px]">
-          <h4 className="text-bs-dark font-semibold text-[18px] font-[Poppins]">Your Friends</h4>
-          <Link href="#" className="text-[13px] font-medium text-bs-primary hover:underline font-[Poppins]">See All</Link>
+      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-bg dark:border-bs-dark2 transition-colors flex flex-col min-h-0">
+        <div className="flex items-center justify-between mb-[24px]">
+          <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] font-[Poppins]">Your Friends</h4>
+          <Link href="#0" className="text-[12px] font-medium text-bs-primary hover:underline font-[Poppins]">See All</Link>
         </div>
-
-        {/* Search */}
-        <div className="relative mb-[16px]">
-          <SearchIcon />
-          <input
-            type="search"
-            placeholder="Search friends..."
-            className="w-full h-[40px] bg-[#F2F4F7] border border-transparent rounded-[20px] pl-[36px] pr-[16px] text-[14px] font-[Poppins] text-bs-dark placeholder-[#666] focus:outline-none transition-all"
+        
+        <div className="relative mb-[24px]">
+          <BsInput 
+            placeholder="input search text" 
+            className="pl-[36px] h-[36px] rounded-[4px] text-[13px]"
           />
+          <div className="absolute left-[12px] top-1/2 -translate-y-1/2 text-bs-muted">
+            <BsIcon name="search" size={14} />
+          </div>
         </div>
 
-        {/* Friends List */}
-        <div className="space-y-[16px] max-h-[400px] overflow-y-auto scrollbar-hide pt-[8px]">
+        <div className="space-y-[20px] overflow-y-auto pr-1 -mr-1 scrollbar-hide">
           {friends.map((friend, i) => (
-            <div
-              key={i}
-              className={`flex items-center justify-between ${friend.online ? "opacity-100" : "opacity-[0.85]"}`}
-            >
+            <div key={i} className="flex items-center justify-between group cursor-pointer">
               <div className="flex items-center gap-[12px]">
-                <Link href="/profile" className="relative shrink-0">
-                  <img src={friend.img} alt={friend.name} className="w-[42px] h-[42px] rounded-full object-cover border-[2.5px] border-transparent hover:border-bs-primary transition-all" />
-                </Link>
-                <div className="min-w-0">
-                  <Link href="/profile">
-                    <h4 className="text-[14px] font-medium text-bs-dark font-[Poppins] hover:text-bs-primary transition-colors truncate">{friend.name}</h4>
-                  </Link>
-                  <p className="text-[12px] text-bs-muted font-[Poppins] truncate">{friend.role}</p>
+                <div className="relative">
+                   <img src={friend.img} alt={friend.name} className="w-[36px] h-[36px] rounded-full object-cover shrink-0 border border-bs-bg dark:border-bs-dark2" />
+                   {friend.active && (
+                     <span className="absolute bottom-0 right-0 w-[10px] h-[10px] bg-bs-green border-2 border-white dark:border-bs-dark1 rounded-full" />
+                   )}
+                </div>
+                <div>
+                  <h4 className="text-[14px] font-medium text-bs-dark dark:text-bs-text font-[Poppins] group-hover:text-bs-primary transition-colors leading-[1.1]">{friend.name}</h4>
+                  <p className="text-[11px] font-light text-bs-muted font-[Poppins] mt-[2px]">{friend.role}</p>
                 </div>
               </div>
-              <div className="shrink-0 ml-2">
-                {friend.online ? (
-                  <OnlineDot />
-                ) : (
-                  <span className="text-[11px] text-bs-muted font-[Poppins] whitespace-nowrap">{friend.time}</span>
-                )}
+              <div className="text-[10px] text-bs-muted font-[Poppins] opacity-60 shrink-0">
+                {friend.lastSeen || ""}
               </div>
             </div>
           ))}

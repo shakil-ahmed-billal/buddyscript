@@ -1,5 +1,6 @@
-import { FeedMobileNav, FeedNavbar } from "@/components/feed";
+import { FeedMobileNav, FeedNavbar, ThemeToggle } from "@/components/feed";
 import { getSession } from "@/lib/session";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export default async function MainLayout({
   children,
@@ -9,17 +10,27 @@ export default async function MainLayout({
   const user = await getSession();
 
   return (
-    <div className="h-screen bg-bs-bg font-[Poppins,sans-serif] overflow-hidden flex flex-col">
-      {/* Top Navbar */}
-      <FeedNavbar />
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="light"
+      enableSystem={false}
+      disableTransitionOnChange
+    >
+      <div className="h-screen bg-bs-bg font-[Poppins,sans-serif] overflow-hidden flex flex-col transition-colors duration-300">
+        {/* Theme Toggle Button */}
+        <ThemeToggle />
 
-      {/* Main Content Area */}
-      <main className="flex-1 pt-[100px] overflow-hidden">
-        {children}
-      </main>
+        {/* Top Navbar */}
+        <FeedNavbar />
 
-      {/* Mobile Bottom Navigation */}
-      <FeedMobileNav />
-    </div>
+        {/* Main Content Area */}
+        <main className="flex-1 pt-[100px] overflow-hidden">
+          {children}
+        </main>
+
+        {/* Mobile Bottom Navigation */}
+        <FeedMobileNav />
+      </div>
+    </ThemeProvider>
   );
 }

@@ -13,127 +13,58 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-
-  /* BuddyScript Brand Colors */
+  
+  /* BuddyScript Theme Variables */
   --color-bs-primary: #1890FF;
-  --color-bs-bg: #F0F2F5;
+  --color-bs-bg: var(--bs-bg);
+  --color-bs-card-bg: var(--bs-card-bg);
+  --color-bs-text: var(--bs-text);
+  --color-bs-muted: var(--bs-text-muted);
+  --color-bs-border: var(--bs-border);
   --color-bs-white: #FFFFFF;
   --color-bs-dark: #112032;
+  --color-bs-dark1: #112032;
   --color-bs-dark2: #232E42;
-  --color-bs-text: #2D3748;
-  --color-bs-muted: #666666;
   --color-bs-green: #0ACF83;
-  --color-bs-border: #E8E8E8;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --background: #F0F2F5;
+  --foreground: #212121;
+  
+  /* BS Vars - Light */
+  --bs-bg: #F0F2F5;
+  --bs-card-bg: #FFFFFF;
+  --bs-text: #212121;
+  --bs-text-muted: #666666;
+  --bs-border: #F0F2F5;
+  --bs-input-bg: #F5F5F5;
+  --bs-comment-bg: #F2F4F7;
+
   --primary: #1890FF;
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --border: #F0F2F5;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #1890FF;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #232E42;
+  --foreground: #FFFFFF;
+  
+  /* BS Vars - Dark */
+  --bs-bg: #232E42;
+  --bs-card-bg: #112032;
+  --bs-text: #FFFFFF;
+  --bs-text-muted: rgba(255, 255, 255, 0.46);
+  --bs-border: #232E42;
+  --bs-input-bg: #232E42;
+  --bs-comment-bg: #1B293D;
+
+  --border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-bs-border outline-none;
   }
   body {
     @apply bg-bs-bg text-bs-text;
@@ -147,15 +78,6 @@
     padding: 0px;
     margin: 0 auto;
   }
-  p, pre {
-    @apply text-[14px] leading-normal;
-    color: #767676;
-    margin: 0px;
-  }
-  h1 { @apply text-[30px] font-semibold; }
-  h2 { @apply text-[24px] font-semibold; }
-  h3 { @apply text-[20px] font-semibold; }
-  h4 { @apply text-[17px] font-semibold; }
 }
 
 @layer utilities {
@@ -168,34 +90,127 @@
   }
 }
 
-/* Flaticon Support */
-@font-face {
-  font-family: "Flaticon";
-  src: url("/assets/fonts/flaticon/Flaticon.eot");
-  src: url("/assets/fonts/flaticon/Flaticon.eot?#iefix") format("embedded-opentype"),
-       url("/assets/fonts/flaticon/Flaticon.woff2") format("woff2"),
-       url("/assets/fonts/flaticon/Flaticon.woff") format("woff"),
-       url("/assets/fonts/flaticon/Flaticon.ttf") format("truetype"),
-       url("/assets/fonts/flaticon/Flaticon.svg#Flaticon") format("svg");
-  font-weight: normal;
-  font-style: normal;
+/* =============================================
+   BuddyScript Component Classes
+   ============================================= */
+.bs-comment-bubble {
+  background-color: var(--bs-comment-bg);
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
 }
 
+._layout_mode_swithing_btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateX(-0%);
+  z-index: 9999;
+}
+
+.dark ._layout_mode_swithing_btn ._layout_swithing_btn_link {
+  border: 1px solid #1890FF !important;
+}
+
+/* Targeted Blue Border for specific suggested buttons in Dark Mode */
+.dark ._bs_suggested_btn_outline {
+  border-color: #1890FF !important;
+  color: #1890FF !important;
+}
+
+._layout_swithing_btn_link {
+  background: #1890FF;
+  border: 1px solid #1890FF;
+  border-radius: 40px;
+  width: 66px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transform: rotate(90deg);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.dark ._layout_swithing_btn_link {
+  background: #232E42;
+  border-color: #232E42;
+}
+
+._layout_swithing_btn {
+  position: absolute;
+  left: 10px;
+  transition: 0.3s all ease;
+  z-index: 2;
+}
+
+.dark ._layout_swithing_btn {
+  left: calc(100% - 28px);
+}
+
+._layout_swithing_btn_round {
+  background: #FFFFFF;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.dark ._layout_swithing_btn_round {
+  background-color: #1890FF;
+}
+
+._layout_change_btn_ic1 {
+  position: absolute;
+  right: 16px;
+  transform: rotate(-90deg);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dark ._layout_change_btn_ic1 {
+  visibility: hidden;
+  opacity: 0;
+}
+
+._layout_change_btn_ic2 {
+  position: absolute;
+  left: 8px;
+  transform: rotate(-90deg);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dark ._layout_change_btn_ic2 {
+  visibility: visible;
+  opacity: 1;
+}
 
 /* =============================================
-   BuddyScript Utility Classes
+   BuddyScript Component Fixes for Dark Mode
    ============================================= */
-.bs-bg { background-color: #F0F2F5; }
-.bs-card { background-color: #FFFFFF; border-radius: 6px; }
-.bs-primary { color: #1890FF; }
-.bs-btn-primary {
-  background-color: #1890FF;
-  color: #fff;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all 0.3s ease;
+.dark .bg-white {
+  @apply bg-bs-card-bg;
 }
-.bs-btn-primary:hover {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+.dark .text-bs-dark {
+  @apply text-bs-text;
+}
+
+.dark .border-bs-bg {
+  @apply border-bs-border;
+}
+
+.dark hr {
+  @apply border-bs-border;
+}
+
+/* Navbar specific dark mode svg colors */
+.dark ._header_nav_link svg path {
+  fill: #FFFFFF;
+}
+
+.dark ._header_nav_link svg ._home,
+.dark ._header_nav_link svg ._home1,
+.dark ._header_nav_link svg ._home_dark {
+  stroke: #FFFFFF;
 }
