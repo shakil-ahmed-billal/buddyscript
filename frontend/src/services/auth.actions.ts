@@ -5,7 +5,7 @@ import { deleteCookie } from "@/lib/cookieUtils";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
+const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 
 export const loginAction = async (payload: any) => {
   try {
