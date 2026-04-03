@@ -83,7 +83,7 @@ export function PostCard({ post }: { post: Post }) {
       {/* ── Post Image ── */}
       {post.postImg && (
         <div className="w-full">
-          <img src={post.postImg} alt={post.title || ""} className="w-full h-auto object-cover max-h-[500px]" />
+          <img src={post.postImg} alt={post.title || ""} className="w-full h-auto object-cover px-[24px] max-h-[500px]" />
         </div>
       )}
 
