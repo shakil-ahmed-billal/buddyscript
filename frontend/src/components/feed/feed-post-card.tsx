@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { Post } from "@/data/feedData";
+import type { Post } from "@/data/mock-data";
 import { BsIcon } from "@/components/ui/bs-icons";
 import { BsButton, BsInput } from "@/components/ui/bs-shared";
 
