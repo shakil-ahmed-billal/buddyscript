@@ -171,7 +171,7 @@ export function FeedNavbar() {
               <img
                 src="/assets/images/logo.svg"
                 alt="Buddy Script"
-                className="w-[165px] object-contain dark:brightness-200"
+                className="w-[165px] object-contain"
               />
             </Link>
 

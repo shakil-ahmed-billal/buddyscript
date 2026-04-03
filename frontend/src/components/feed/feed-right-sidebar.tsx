@@ -4,24 +4,7 @@ import Link from "next/link";
 import { BsIcon } from "@/components/ui/bs-icons";
 import { BsButton, BsInput } from "@/components/ui/bs-shared";
 
-// ─── Suggested People ─────────────────────────────────────────────────────
-const suggestedPeople = [
-  {
-    name: "Radovan SkillArena",
-    role: "Founder & CEO at Trophy",
-    img: "/assets/images/Avatar.png",
-    href: "/profile",
-  }
-];
-
-// ─── Friends List ─────────────────────────────────────────────────────────
-const friends = [
-  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", lastSeen: "5 minute ago", active: false },
-  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", active: true },
-  { name: "Dylan Field", role: "CEO of Figma", img: "/assets/images/people3.png", active: true },
-  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", lastSeen: "5 minute ago", active: false },
-  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", active: false },
-];
+import { rightSuggestedPeople, friends } from "@/data/mock-data";
 
 export function FeedRightSidebar() {
   return (
@@ -34,7 +17,7 @@ export function FeedRightSidebar() {
         </div>
         <div className="h-px bg-bs-bg dark:bg-bs-dark2 mb-[24px]" />
         
-        {suggestedPeople.map((person, i) => (
+        {rightSuggestedPeople.map((person, i: number) => (
           <div key={i} className="space-y-[16px]">
             <div className="flex items-center gap-[12px]">
               <img src={person.img} alt={person.name} className="w-[40px] h-[40px] rounded-full object-cover shrink-0 border border-bs-bg dark:border-bs-dark2" />

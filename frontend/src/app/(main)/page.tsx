@@ -5,7 +5,7 @@ import {
   FeedStories,
   PostCard,
 } from "@/components/feed";
-import { feedData } from "@/data/feedData";
+import { feedData } from "@/data/mock-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

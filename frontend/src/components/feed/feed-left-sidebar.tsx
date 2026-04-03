@@ -3,58 +3,7 @@
 import Link from "next/link";
 import { BsIcon } from "@/components/ui/bs-icons";
 
-// ─── Explore Menu Items ───────────────────────────────────────────────────
-const exploreItems = [
-  {
-    label: "Learning",
-    badge: "New",
-    icon: <BsIcon name="explore" />,
-  },
-  {
-    label: "Insights",
-    icon: <BsIcon name="insights" />,
-  },
-  {
-    label: "Find Friends",
-    href: "/find-friends",
-    icon: <BsIcon name="friends" />,
-  },
-  {
-    label: "Bookmarks",
-    icon: <BsIcon name="bookmarks" />,
-  },
-  {
-    label: "Group",
-    href: "/group",
-    icon: <BsIcon name="friends" active />, // Group is blue in design often
-  },
-  {
-    label: "Gaming",
-    badge: "New",
-    icon: <BsIcon name="gaming" />,
-  },
-  {
-    label: "Settings",
-    icon: <BsIcon name="settings" />,
-  },
-  {
-    label: "Save post",
-    icon: <BsIcon name="save" />,
-  },
-];
-
-// ─── Suggested People ─────────────────────────────────────────────────────
-const suggestedPeople = [
-  { name: "Steve Jobs", role: "CEO of Apple", img: "/assets/images/people1.png", href: "/profile" },
-  { name: "Ryan Roslansky", role: "CEO of Linkedin", img: "/assets/images/people2.png", href: "/profile" },
-  { name: "Dylan Field", role: "CEO of Figma", img: "/assets/images/people3.png", href: "/profile" },
-];
-
-// ─── Events ───────────────────────────────────────────────────────────────
-const events = [
-  { img: "/assets/images/feed_event1.png", day: "10", month: "Jul", title: "No more terrorism no more cry", going: "17 People Going" },
-  { img: "/assets/images/feed_event1.png", day: "14", month: "Aug", title: "Global Tech Summit 2025", going: "42 People Going" },
-];
+import { exploreItems, leftSuggestedPeople, events } from "@/data/mock-data";
 
 // ─── Left Sidebar Component ───────────────────────────────────────────────
 export function FeedLeftSidebar() {
@@ -71,7 +20,7 @@ export function FeedLeftSidebar() {
                 className="flex items-center text-bs-muted dark:text-bs-muted text-[16px] font-[Poppins] hover:text-bs-primary dark:hover:text-bs-primary leading-[1.4] font-medium transition-all group relative"
               >
                 <div className="mr-[14px] flex items-center justify-center text-bs-muted group-hover:text-bs-primary transition-colors">
-                  {item.icon}
+                  <BsIcon name={item.iconName} active={item.active} />
                 </div>
                 {item.label}
                 {item.badge && (
@@ -92,7 +41,7 @@ export function FeedLeftSidebar() {
           <Link href="#0" className="text-[12px] font-medium text-bs-primary leading-[18px] font-[Poppins]">See All</Link>
         </div>
         <div className="space-y-[24px]">
-          {suggestedPeople.map((person) => (
+          {leftSuggestedPeople.map((person) => (
             <div key={person.name} className="flex items-center justify-between">
               <div className="flex items-center flex-1">
                 <Link href={person.href} className="mr-[16px]">
