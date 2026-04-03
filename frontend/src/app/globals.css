@@ -1,3 +1,6 @@
+/* BuddyScript — Poppins Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -46,6 +49,17 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* BuddyScript Brand Colors */
+  --color-bs-primary: #1890FF;
+  --color-bs-bg: #F0F2F5;
+  --color-bs-white: #FFFFFF;
+  --color-bs-dark: #112032;
+  --color-bs-dark2: #232E42;
+  --color-bs-text: #2D3748;
+  --color-bs-muted: #666666;
+  --color-bs-green: #0ACF83;
+  --color-bs-border: #E8E8E8;
 }
 
 :root {
@@ -55,7 +69,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: #1890FF;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -75,7 +89,7 @@
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: #1890FF;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -122,9 +136,66 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bs-bg text-bs-text;
+    font-family: 'Poppins', sans-serif;
+    margin: 0px auto;
+    padding: 0px;
   }
   html {
-    @apply font-sans;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    padding: 0px;
+    margin: 0 auto;
   }
+  p, pre {
+    @apply text-[14px] leading-normal;
+    color: #767676;
+    margin: 0px;
+  }
+  h1 { @apply text-[30px] font-semibold; }
+  h2 { @apply text-[24px] font-semibold; }
+  h3 { @apply text-[20px] font-semibold; }
+  h4 { @apply text-[17px] font-semibold; }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Flaticon Support */
+@font-face {
+  font-family: "Flaticon";
+  src: url("/assets/fonts/flaticon/Flaticon.eot");
+  src: url("/assets/fonts/flaticon/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("/assets/fonts/flaticon/Flaticon.woff2") format("woff2"),
+       url("/assets/fonts/flaticon/Flaticon.woff") format("woff"),
+       url("/assets/fonts/flaticon/Flaticon.ttf") format("truetype"),
+       url("/assets/fonts/flaticon/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+/* =============================================
+   BuddyScript Utility Classes
+   ============================================= */
+.bs-bg { background-color: #F0F2F5; }
+.bs-card { background-color: #FFFFFF; border-radius: 6px; }
+.bs-primary { color: #1890FF; }
+.bs-btn-primary {
+  background-color: #1890FF;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.bs-btn-primary:hover {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

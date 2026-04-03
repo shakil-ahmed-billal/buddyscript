@@ -8,17 +8,11 @@
  const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
  export const metadata = {
-   title: "Shakil Stack - Full Stack Boilerplate",
-   description: "Modern full-stack boilerplate with Next.js, Prisma, and Better-Auth.",
+   title: "BuddyScript - Feed",
+   description: "BuddyScript Feed Design",
    icons: {
-     icon: [
-       { url: "/favicons/favicon.ico", sizes: "any" },
-       { url: "/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-       { url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" }
-     ],
-     apple: "/favicons/apple-touch-icon.png",
+     icon: "/favicon.ico",
    },
-   manifest: "/favicons/site.webmanifest",
  };
 
  export default async function RootLayout({

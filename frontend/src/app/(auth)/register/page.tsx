@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
+import { RegisterForm } from "@/components/auth";
 
-import { RegisterForm } from "@/components/auth/register-form";
-
-export const metadata = { title: "Register" };
+export const metadata: Metadata = {
+  title: "Register — Buddy Script",
+  description: "Get started now! Create a new Buddy Script account.",
+};
 
 export default function RegisterPage() {
   return <RegisterForm />;

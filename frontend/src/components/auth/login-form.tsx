@@ -1,159 +1,130 @@
-
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { loginAction } from "@/services/auth.actions";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { ShieldCheck, ArrowRight } from "lucide-react";
-import { Logo } from "@/components/logo";
+import Image from "next/image";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
-
-export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit = async (data: LoginFormValues) => {
-    setLoading(true);
-    try {
-      const response = await loginAction(data);
-      if (response?.success) {
-        toast.success("Logged in successfully!");
-        router.push("/dashboard");
-        router.refresh();
-      } else {
-        toast.error(response?.message || "Login failed");
-      }
-    } catch {
-      toast.error("An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+export function LoginForm() {
+  const [rememberMe, setRememberMe] = useState(true);
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="relative hidden lg:flex flex-col bg-muted p-10 text-white dark:border-r">
-        <div className="absolute inset-0 bg-primary/20 backdrop-blur-3xl" />
-        <div className="absolute inset-0 bg-linear-to-br from-primary via-primary/80 to-background opacity-90" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-        <div className="absolute inset-0 bg-grid-white/[0.05]" />
-
-        <div className="relative z-20 flex items-center text-2xl font-bold gap-2">
-          <Logo />
-        </div>
-        
-        <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-3xl font-medium leading-tight tracking-tight text-white">
-              &ldquo;The fastest way to take your ideas from zero to production. Beautifully crafted, production-ready, and developer-obsessed.&rdquo;
-            </p>
-            <footer className="text-lg opacity-80 mt-4 font-sans text-white">&mdash; Shakil Ahmed Billal</footer>
-          </blockquote>
-        </div>
+    <div className="min-h-screen w-full flex items-center justify-center bg-bs-bg relative overflow-hidden font-[Poppins,sans-serif]">
+      {/* Background Shape Decorations */}
+      <div className="absolute top-0 left-0 w-[300px] h-[300px] pointer-events-none select-none opacity-60">
+        <img src="/assets/images/shape1.svg" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] pointer-events-none select-none opacity-60">
+        <img src="/assets/images/shape2.svg" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute top-1/2 left-1/4 w-[200px] h-[200px] pointer-events-none select-none opacity-40">
+        <img src="/assets/images/shape3.svg" alt="" className="w-full h-full object-contain" />
       </div>
 
-      <div className="flex flex-col items-center justify-center p-6 sm:p-12 lg:bg-background bg-muted/30">
-        <div className="w-full max-w-md space-y-8">
-          <div className="flex flex-col items-center text-center space-y-2">
-            <Link href="/" className="lg:hidden mb-6 flex items-center gap-2">
-               <Logo />
-            </Link>
-            <h1 className="text-3xl font-extrabold tracking-tight">Welcome Back</h1>
-            <p className="text-muted-foreground">Enter your credentials to access your account</p>
+      {/* Main Container */}
+      <div className="container max-w-6xl mx-auto px-4 py-10 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
+
+          {/* Left — Illustration */}
+          <div className="w-full lg:w-2/3 hidden lg:flex items-center justify-center">
+            <img
+              src="/assets/images/login.png"
+              alt="Login Illustration"
+              className="max-w-[560px] w-full h-auto object-contain"
+            />
           </div>
 
-          <div className="bg-background lg:bg-transparent p-8 lg:p-0 rounded-3xl border border-border/50 lg:border-none shadow-xl lg:shadow-none space-y-6">
-            <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-              <FieldGroup className="space-y-4">
-                <Field>
-                  <FieldLabel htmlFor="email">Email Address</FieldLabel>
+          {/* Right — Form Card */}
+          <div className="w-full lg:w-1/3 flex justify-center lg:justify-end">
+            <div className="bg-white rounded-xl shadow-[7px_20px_60px_rgba(108,126,147,0.15)] p-8 w-full max-w-[420px]">
+
+              {/* Logo */}
+              <div className="mb-7">
+                <img src="/assets/images/logo.svg" alt="Buddy Script" className="h-10 w-auto object-contain" />
+              </div>
+
+              {/* Heading */}
+              <p className="text-[#767676] text-sm mb-2">Welcome back</p>
+              <h4 className="text-[#1A202C] font-semibold text-[17px] mb-10">Login to your account</h4>
+
+              {/* Google Sign-in */}
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-3 border border-bs-border rounded-[6px] py-3 px-4 mb-8 hover:bg-[#f5f5f5] transition-all duration-300 text-bs-text text-sm font-medium"
+              >
+                <img src="/assets/images/google.svg" alt="Google" className="w-5 h-5 object-contain" />
+                <span>Or sign-in with google</span>
+              </button>
+
+              {/* Divider */}
+              <div className="relative flex items-center mb-8">
+                <div className="flex-1 border-t border-bs-border" />
+                <span className="mx-4 text-[#767676] text-sm">Or</span>
+                <div className="flex-1 border-t border-bs-border" />
+              </div>
+
+              {/* Form */}
+              <form className="space-y-3">
+                {/* Email */}
+                <div className="space-y-1.5">
+                  <Label className="text-bs-text text-sm font-medium">Email</Label>
                   <Input
-                    id="email"
                     type="email"
-                    placeholder="name@example.com"
-                    className="h-12 bg-muted/50 border-transparent focus:bg-background transition-all"
-                    {...register("email")}
+                    placeholder="Enter your email"
+                    className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
                   />
-                  {errors.email && <p className="text-sm text-destructive font-medium">{errors.email.message}</p>}
-                </Field>
-                <Field>
-                  <div className="flex items-center justify-between">
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Link href="#" className="text-sm font-medium text-primary hover:underline">
-                      Forgot password?
-                    </Link>
-                  </div>
+                </div>
+
+                {/* Password */}
+                <div className="space-y-1.5">
+                  <Label className="text-bs-text text-sm font-medium">Password</Label>
                   <Input
-                    id="password"
                     type="password"
-                    placeholder="••••••••"
-                    className="h-12 bg-muted/50 border-transparent focus:bg-background transition-all"
-                    {...register("password")}
+                    placeholder="Enter your password"
+                    className="h-11 rounded-[6px] border-bs-border bg-[#F5F5F5] focus:border-bs-primary focus:bg-white transition-all text-sm"
                   />
-                  {errors.password && <p className="text-sm text-destructive font-medium">{errors.password.message}</p>}
-                </Field>
-              </FieldGroup>
+                </div>
 
-              <Button type="submit" disabled={loading} className="w-full h-12 text-base font-bold transition-all hover:scale-[1.01] active:scale-[0.99] group shadow-lg shadow-primary/20">
-                {loading ? "Signing in..." : (
-                  <>
-                    Sign in <ArrowRight className="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </Button>
-            </form>
+                {/* Remember / Forgot */}
+                <div className="flex items-center justify-between pt-1">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="remember"
+                      checked={rememberMe}
+                      onCheckedChange={(v) => setRememberMe(!!v)}
+                      className="border-[#C4C4C4] data-[state=checked]:bg-bs-primary data-[state=checked]:border-bs-primary"
+                    />
+                    <label htmlFor="remember" className="text-sm text-[#767676] cursor-pointer select-none">
+                      Remember me
+                    </label>
+                  </div>
+                  <button type="button" className="text-sm text-bs-primary hover:underline font-medium">
+                    Forgot password?
+                  </button>
+                </div>
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground whitespace-nowrap">Or continue with</span>
-              </div>
+                {/* Submit */}
+                <div className="pt-6 pb-4">
+                  <button
+                    type="submit"
+                    className="w-full h-12 bg-bs-primary hover:bg-[#0d7de8] text-white font-medium text-base rounded-[6px] transition-all duration-300 hover:shadow-lg"
+                  >
+                    Login now
+                  </button>
+                </div>
+              </form>
+
+              {/* Bottom Link */}
+              <p className="text-center text-sm text-[#767676]">
+                Don&apos;t have an account?{" "}
+                <Link href="/register" className="text-bs-primary font-medium hover:underline">
+                  Create New Account
+                </Link>
+              </p>
             </div>
-
-            <Link 
-              href="#" 
-              className={cn(
-                buttonVariants({ variant: "outline" }), 
-                "w-full h-12 border-muted-foreground/20 hover:bg-muted/50 transition-colors"
-              )}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="mr-3 h-5 w-5">
-                <path d="M12.452 11.01v3.007h7.375c-.226 1.686-.803 2.921-1.681 3.788-1.08 1.052-2.76 2.2-5.694 2.2-4.541 0-8.09-3.568-8.09-7.993s3.549-7.993 8.09-7.993c2.446 0 4.24.941 5.557 2.151l2.17-2.115C18.347 2.32 15.889 1 12.452 1 6.23 1 1 5.938 1 12s5.23 11 11.452 11c3.36 0 5.895-1.075 7.876-3.08C22.36 17.94 23 15.141 23 12.892c0-.697-.05-1.345-.163-1.882z" fill="currentColor" />
-              </svg>
-              Google account
-            </Link>
-
-            <p className="text-center text-sm text-muted-foreground pt-4">
-              New here?{" "}
-              <Link href="/register" className="font-bold text-primary hover:underline underline-offset-4">
-                Create an account
-              </Link>
-            </p>
           </div>
         </div>
       </div>

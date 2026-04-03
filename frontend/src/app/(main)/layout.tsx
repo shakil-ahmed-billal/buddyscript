@@ -1,6 +1,4 @@
-
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { FeedMobileNav, FeedNavbar } from "@/components/feed";
 import { getSession } from "@/lib/session";
 
 export default async function MainLayout({
@@ -11,10 +9,17 @@ export default async function MainLayout({
   const user = await getSession();
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar user={user} />
-      <main className="flex-1">{children}</main>
-      <Footer />
+    <div className="h-screen bg-bs-bg font-[Poppins,sans-serif] overflow-hidden flex flex-col">
+      {/* Top Navbar */}
+      <FeedNavbar />
+
+      {/* Main Content Area */}
+      <main className="flex-1 pt-[100px] overflow-hidden">
+        {children}
+      </main>
+
+      {/* Mobile Bottom Navigation */}
+      <FeedMobileNav />
     </div>
   );
 }
