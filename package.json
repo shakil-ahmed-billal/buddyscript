@@ -1,0 +1,45 @@
+{
+  "name": "buddyscript",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.2.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "msw",
+      "unrs-resolver",
+      "shadcn"
+    ],
+    "overrides": {
+      "zod": "^4.3.6"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "zod",
+        "node-domexception"
+      ],
+      "allowedVersions": {
+        "zod": "^4.3.6",
+        "node-domexception": "*"
+      }
+    }
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "cd backend && pnpm dev",
+    "dev:frontend": "cd frontend && pnpm dev",
+    "build:backend": "cd backend && pnpm build",
+    "build:frontend": "cd frontend && pnpm build",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "push": "git add . && git commit -m 'chore: bump version' && git push"
+  }
+}

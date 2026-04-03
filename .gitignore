@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env*
+dist/
+api/
+backend/dist/
+backend/api/
+backend/generated/
+frontend/.next/
+*.log
+.DS_Store
