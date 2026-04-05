@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma.js";
 import AppError from "../../errorHelpers/ApiError.js";
 import httpStatus from "http-status";
 import { deleteFileFromCloudinary } from "../../config/cloudinary.config.js";
+import { getCache, setCache, delCacheByPrefix } from "../../utils/cache.utils.js";
 
 const createPost = async (userId: string, payload: { content?: string; image?: string; visibility?: "PUBLIC" | "PRIVATE" }) => {
   const result = await prisma.post.create({
@@ -21,10 +22,22 @@ const createPost = async (userId: string, payload: { content?: string; image?: s
       }
     }
   });
+
+  // Invalidate feed cache
+  await delCacheByPrefix("feed:");
   return result;
 };
 
 const getFeed = async (userId: string) => {
+  const cacheKey = `feed:${userId}`;
+  const cachedFeed = await getCache<any[]>(cacheKey);
+  if (cachedFeed) {
+    console.log(`✅ [Redis] Cache hit for ${cacheKey}`);
+    return cachedFeed;
+  }
+
+  console.log(`❌ [Redis] Cache miss for ${cacheKey}. Fetching from DB...`);
+  
   // Get all PUBLIC posts from all users AND PRIVATE posts from the logged-in user
   const posts = await prisma.post.findMany({
     where: {
@@ -77,6 +90,12 @@ const getFeed = async (userId: string) => {
       }
     }
   });
+
+  // Cache only if there are posts (avoid caching empty results for short bit)
+  if (posts.length > 0) {
+    await setCache(cacheKey, posts, 300); // 5 minutes TTL
+  }
+  
   return posts;
 };
 
@@ -98,6 +117,9 @@ const deletePost = async (userId: string, postId: string) => {
   }
 
   await prisma.post.delete({ where: { id: postId } });
+  
+  // Invalidate feed cache
+  await delCacheByPrefix("feed:");
   return { id: postId };
 };
 
@@ -116,6 +138,7 @@ const toggleLikePost = async (userId: string, postId: string) => {
 
   if (existingLike) {
     await prisma.like.delete({ where: { id: existingLike.id } });
+    await delCacheByPrefix("feed:");
     return { liked: false };
   } else {
     await prisma.like.create({
@@ -124,6 +147,7 @@ const toggleLikePost = async (userId: string, postId: string) => {
         postId
       }
     });
+    await delCacheByPrefix("feed:");
     return { liked: true };
   }
 };

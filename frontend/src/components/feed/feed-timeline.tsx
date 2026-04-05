@@ -2,7 +2,7 @@
 
 import { useFeedPosts } from "@/hooks/useFeed";
 import { PostCard } from "./feed-post-card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { PostSkeleton } from "./feed-skeleton";
 
 export function FeedTimeline({ currentUser }: { currentUser?: any }) {
   const { data, isLoading, isError } = useFeedPosts();
@@ -11,7 +11,7 @@ export function FeedTimeline({ currentUser }: { currentUser?: any }) {
     return (
       <div className="space-y-[16px]">
         {[...Array(3)].map((_, i) => (
-          <Skeleton key={i} className="w-full h-48 rounded-xl" />
+          <PostSkeleton key={i} />
         ))}
       </div>
     );

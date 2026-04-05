@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTogglePostLike, useCreateComment, useDeletePost, useToggleCommentLike } from "@/hooks/useFeed";
 import type { Post } from "@/data/mock-data";
 import { BsIcon } from "@/components/ui/bs-icons";
@@ -136,8 +137,21 @@ export function PostCard({ post, currentUser }: { post: any; currentUser?: any }
 
       {/* ── Post Image ── */}
       {post.image && (
-        <div className="w-full">
-          <img src={post.image} alt="post image" className="w-full h-auto object-cover px-[24px] max-h-[500px]" onError={(e) => { (e.target as HTMLImageElement).src = '/assets/images/placeholder.png' }} />
+        <div className="w-full relative min-h-[300px] bg-slate-100 dark:bg-bs-dark2 px-[24px]">
+          <Image
+            src={post.image}
+            alt="post image"
+            width={800}
+            height={500}
+            className="w-full h-auto object-cover rounded-lg"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            loading="lazy"
+            onError={(e) => {
+              const target = e.target as any;
+              target.srcset = "";
+              target.src = "/assets/images/placeholder.png";
+            }}
+          />
         </div>
       )}
 

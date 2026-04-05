@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface UserProfileImageProps {
   src?: string | null;
@@ -51,13 +52,17 @@ export function UserProfileImage({
 
   if (src && !imgError) {
     return (
-      <img
-        src={src}
-        alt={alt || name || "User"}
-        style={sizeStyle}
-        className={baseClass}
-        onError={() => setImgError(true)}
-      />
+      <div style={sizeStyle} className={cn("relative overflow-hidden", baseClass)}>
+        <Image
+          src={src}
+          alt={alt || name || "User"}
+          fill
+          sizes={`${size}px`}
+          className="object-cover"
+          onError={() => setImgError(true)}
+          priority={size > 100} // Prioritize larger profile images
+        />
+      </div>
     );
   }
 

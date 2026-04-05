@@ -17,6 +17,8 @@ model User {
   posts         Post[]
   comments      Comment[]
   likes         Like[]
+
+  @@index([role])
 }
 
 model Session {

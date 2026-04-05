@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -43,27 +44,30 @@ export function LoginForm() {
     <div className="min-h-screen w-full flex items-center justify-center bg-bs-bg relative overflow-hidden font-[Poppins,sans-serif]">
       {/* Background Shape Decorations */}
       <div className="absolute top-0 left-0 w-[300px] h-[300px] pointer-events-none select-none opacity-60">
-        <img src="/assets/images/shape1.svg" alt="" className="w-full h-full object-contain" />
+        <Image src="/assets/images/shape1.svg" alt="" width={300} height={300} className="w-full h-full object-contain" />
       </div>
       <div className="absolute bottom-0 right-0 w-[300px] h-[300px] pointer-events-none select-none opacity-60">
-        <img src="/assets/images/shape2.svg" alt="" className="w-full h-full object-contain" />
+        <Image src="/assets/images/shape2.svg" alt="" width={300} height={300} className="w-full h-full object-contain" />
       </div>
 
       <div className="container max-w-6xl mx-auto px-4 py-10 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
           
           <div className="w-full lg:w-2/3 hidden lg:flex items-center justify-center">
-            <img
+            <Image
               src="/assets/images/login.png"
               alt="Login Illustration"
+              width={500}
+              height={500}
               className="max-w-[500px] w-full h-auto object-contain"
+              priority
             />
           </div>
 
           <div className="w-full lg:w-1/3 flex justify-center lg:justify-end">
             <div className="bg-white rounded-xl shadow-[7px_20px_60px_rgba(108,126,147,0.15)] p-8 w-full max-w-[420px]">
               <div className="mb-7">
-                <img src="/assets/images/logo.svg" alt="Buddy Script" className="h-10 w-auto object-contain" />
+                <Image src="/assets/images/logo.svg" alt="Buddy Script" width={160} height={40} className="h-10 w-auto object-contain" />
               </div>
 
               <p className="text-[#767676] text-sm mb-2">Welcome Back!</p>
@@ -74,7 +78,7 @@ export function LoginForm() {
                 onClick={handleGoogleLogin}
                 className="w-full flex items-center justify-center gap-3 border border-bs-border rounded-[6px] py-3 px-4 mb-8 hover:bg-[#f5f5f5] transition-all duration-300 text-bs-text text-sm font-medium"
               >
-                <img src="/assets/images/google.svg" alt="Google" className="w-5 h-5 object-contain" />
+                <Image src="/assets/images/google.svg" alt="Google" width={20} height={20} className="w-5 h-5 object-contain" />
                 <span>Login with google</span>
               </button>
 

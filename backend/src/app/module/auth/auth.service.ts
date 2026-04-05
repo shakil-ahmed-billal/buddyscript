@@ -4,6 +4,7 @@ import AppError from "../../errorHelpers/ApiError.js";
 import { auth } from "../../lib/auth.js";
 import { prisma } from "../../lib/prisma.js";
 import { tokenUtils } from "../../utils/token.js";
+import { getCache, setCache } from "../../utils/cache.utils.js";
 import { jwtUtils } from "../../utils/jwt.js";
 import config from "../../config/index.js";
 import { IChangePasswordPayload, ILoginUserPayload, IRegisterUserPayload } from "./auth.interface.js";
@@ -70,6 +71,12 @@ const loginUser = async (payload: ILoginUserPayload) => {
 }
 
 const getMe = async (userId: string) => {
+    const cacheKey = `user:${userId}`;
+    const cachedUser = await getCache<any>(cacheKey);
+    if (cachedUser) {
+        return cachedUser;
+    }
+
     const user = await prisma.user.findUnique({
         where: { id: userId },
     });
@@ -78,6 +85,7 @@ const getMe = async (userId: string) => {
         throw new AppError(status.NOT_FOUND, "User not found");
     }
 
+    await setCache(cacheKey, user, 3600); // Cache for 1 hour
     return user;
 }
 

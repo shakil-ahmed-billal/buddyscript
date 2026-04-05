@@ -1,80 +1,61 @@
-# 🚀 buddyscript
+# BuddyScript - Advanced Social Network Architecture
 
-A professional, high-performance full-stack application generated with **[Shakil-Stack](https://github.com/shakil-ahmed-billal/shakil-stack-cli)**. This boilerplate is designed for developer productivity, type safety, and seamless production deployment.
+BuddyScript is a high-performance social networking platform built with a modern technology stack, focusing on speed, scalability, and premium user experience. It features a robust real-time feed, advanced caching mechanisms, and a highly responsive UI with optimistic updates.
 
----
+## Core Features
 
-## ✨ Features
+### Real-Time Feed and Interactions
+- **Optimistic UI Updates**: Interactions like liking a post, creating comments, and deleting content happen instantly in the UI before the server confirmation, providing a zero-latency experience.
+- **Advanced Caching**: Utilizes Redis for backend data caching to minimize database hits and ensure sub-second API response times for the global feed.
+- **Infinite Scrolling**: Optimized data fetching with React Query (TanStack Query) for a seamless browsing experience.
 
-- **Frontend**: Modern [Next.js](https://nextjs.org/) with App Router, Turbopack, and React 19.
-- **Backend**: Robust [Express.js](https://expressjs.com/) server with TypeScript.
-- **ORM**: [Prisma](https://www.prisma.io/) for type-safe database access and migrations.
-- **Authentication**: Pre-configured authentication flows (Login/Register).
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with modern linear gradient syntax.
-- **Form Handling**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) for powerful validation.
-- **UI Components**: Premium, accessible components using **Base UI** and **Shadcn** patterns.
-- **State Management**: [TanStack Query](https://tanstack.com/query) for efficient data fetching.
-- **Architecture**: Modular, folder-based structure for maximum maintainability.
+### Performance Optimization
+- **Image Optimization**: Integrated Next.js Image component for automatic format conversion (WebP/AVIF), responsive resizing, and lazy loading.
+- **Database Indexing**: Strategically placed database indexes on high-traffic fields (authorId, visibility, createdAt) to ensure complex queries remain performant at scale.
+- **Perceived Performance**: Custom skeleton loaders replace generic spinners to keep the user engaged during initial data hydration.
 
----
+### Secure Authentication
+- **Role-Based Access Control**: Secure authentication powered by Better-Auth with support for Google OAuth and traditional email/password flows.
+- **Session Management**: Advanced session tracking with automatic token refreshing and secure cookie-based storage.
 
-## 🛠️ Tech Stack
+## Technology Stack
 
-### Frontend
-- **Framework**: Next.js 16 (Turbopack)
-- **State**: TanStack Query v5
-- **Forms**: React Hook Form + Zod Resolver
-- **Icons**: Lucide React
-- **Notifications**: Sonner
+| Category | Technology |
+| :--- | :--- |
+| Frontend | Next.js 15 (App Router), React 19, TypeScript |
+| Styling | Tailwind CSS, Lucide React, Shadcn UI |
+| State Management | TanStack Query (React Query) |
+| Backend | Node.js, Express, TypeScript |
+| Database | PostgreSQL, Prisma ORM |
+| Caching | Redis (ioredis) |
+| Authentication | Better-Auth, JSON Web Tokens (JWT) |
+| Storage | Cloudinary (Image Hosting) |
 
-### Backend
-- **Framework**: Express.js
-- **Database**: PostgreSQL (via Prisma)
-- **Validation**: Zod
-- **Auth**: JWT / Better-Auth compatible
+## CLI and Development
 
----
+BuddyScript uses a monorepo-style structure for clean separation of concerns between the frontend and backend.
 
-## 📂 Project Structure
+### Project Structure
+- **/frontend**: Next.js application core.
+- **/backend**: Express API server and Prisma ORM configuration.
 
-```text
-buddyscript/
-├── backend/                # 🖥️ Express Backend
-│   ├── src/
-│   │   ├── app.ts          # Express App Entry
-│   │   ├── server.ts       # Server Entry
-│   │   ├── modules/        # Domain-driven modules
-│   │   └── config/         # Server configuration
-│   └── prisma/             # 🗄️ Database Schema & Migrations
-├── frontend/               # 🎨 Next.js Frontend
-│   ├── src/
-│   │   ├── app/            # Next.js App Router
-│   │   ├── components/     # UI & Shared Components
-│   │   ├── services/       # API Action handlers
-│   │   └── lib/            # Utilities & Config
-├── .env                    # 🔐 Shared Environment Variables
-├── pnpm-workspace.yaml     # 📦 Workspace Configuration
-└── README.md               # 📖 Project Documentation
-```
+### Getting Started
 
----
+1. **Install Dependencies**:
+   Run the following command in the root and both subdirectories:
+   ```bash
+   pnpm install
+   ```
 
-## 🚀 Getting Started
+2. **Environment Configuration**:
+   Create `.env` files in both `frontend/` and `backend/` directories based on the provided templates. Ensure `REDIS_URL` and `DATABASE_URL` are correctly set.
 
-### 1. Prerequisites
-- **Node.js**: >= 20.0.0
-- **pnpm**: Recommended (v9+)
-- **PostgreSQL**: Running instance
-
-### 2. Environment Setup
-Update the root `.env` file with your database credentials and secret keys.
-
-### 3. Database Migration
-Navigate to the backend directory and run migrations:
-```bash
-cd backend
-pnpm prisma migrate dev --name init
-```
+3. **Database Setup**:
+   Run Prisma migrations to initialize your schema:
+   ```bash
+   cd backend
+   npx prisma db push
+   ```
 
 ### 4. Run Development Servers
 From the project root:

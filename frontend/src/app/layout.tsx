@@ -11,7 +11,7 @@
    title: "BuddyScript - Feed",
    description: "BuddyScript Feed Design",
    icons: {
-     icon: "/favicon.ico",
+     icon: "/favicons/favicon.ico",
    },
  };
 

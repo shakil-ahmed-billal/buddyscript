@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../errorHelpers/ApiError.js";
 import httpStatus from "http-status";
+import { delCacheByPrefix } from "../../utils/cache.utils.js";
 
 const createComment = async (userId: string, payload: { content: string; postId: string; parentId?: string }) => {
   const result = await prisma.comment.create({
@@ -22,6 +23,8 @@ const createComment = async (userId: string, payload: { content: string; postId:
       }
     }
   });
+  // Invalidate feed cache because feed includes comments
+  await delCacheByPrefix("feed:");
   return result;
 };
 
@@ -40,6 +43,7 @@ const toggleLikeComment = async (userId: string, commentId: string) => {
 
   if (existingLike) {
     await prisma.like.delete({ where: { id: existingLike.id } });
+    await delCacheByPrefix("feed:");
     return { liked: false };
   } else {
     await prisma.like.create({
@@ -48,6 +52,7 @@ const toggleLikeComment = async (userId: string, commentId: string) => {
         commentId
       }
     });
+    await delCacheByPrefix("feed:");
     return { liked: true };
   }
 };
