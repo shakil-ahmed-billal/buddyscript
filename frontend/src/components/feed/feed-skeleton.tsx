@@ -1,6 +1,6 @@
 export function PostSkeleton() {
   return (
-    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-bg dark:border-bs-dark2 overflow-hidden animate-pulse">
+    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-border dark:border-bs-dark2 overflow-hidden animate-pulse bs-card-shadow">
       {/* Header Skeleton */}
       <div className="flex items-center justify-between px-[24px] pt-[24px] pb-[16px]">
         <div className="flex items-center gap-[12px]">
@@ -19,8 +19,8 @@ export function PostSkeleton() {
       </div>
 
       {/* Image Skeleton */}
-      <div className="w-full h-[300px] bg-slate-200 dark:bg-bs-dark2 px-[24px] mb-[16px]">
-        <div className="w-full h-full rounded-lg bg-slate-300 dark:bg-bs-dark1"></div>
+      <div className="w-full h-[300px] bg-slate-100 dark:bg-bs-dark1 px-[24px] mb-[16px]">
+        <div className="w-full h-full rounded-lg bg-slate-200 dark:bg-bs-dark2"></div>
       </div>
 
       {/* Action Buttons Skeleton */}

@@ -10,7 +10,7 @@ const stories = [
 // ─── Desktop Stories ──────────────────────────────────────────────────────
 export function FeedStories() {
   return (
-    <div className="mb-6 rounded-[6px] bg-white overflow-hidden border border-bs-bg">
+    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-border dark:border-bs-dark2 bs-card-shadow">
       {/* Desktop view */}
       <div className="hidden md:flex flex-row justify-between w-full h-[224px]">
         {/* "Your Story" card */}

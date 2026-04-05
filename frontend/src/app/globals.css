@@ -37,7 +37,7 @@
   --bs-card-bg: #FFFFFF;
   --bs-text: #212121;
   --bs-text-muted: #666666;
-  --bs-border: #F0F2F5;
+  --bs-border: #E4E6EB;
   --bs-input-bg: #F5F5F5;
   --bs-comment-bg: #F2F4F7;
 
@@ -87,6 +87,9 @@
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+  .bs-card-shadow {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 }
 

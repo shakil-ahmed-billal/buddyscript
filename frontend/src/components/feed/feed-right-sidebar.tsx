@@ -13,7 +13,7 @@ export async function FeedRightSidebar() {
     <aside className="hidden xl:flex flex-col gap-[16px] w-full max-w-[320px]">
       {/* ── You Might Like Card ── */}
       {youMightLike.length > 0 && (
-        <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-bg dark:border-bs-dark2 transition-colors mb-[16px]">
+        <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-border dark:border-bs-dark2 transition-colors mb-[16px] bs-card-shadow">
           <div className="flex items-center justify-between mb-[24px]">
             <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] font-[Poppins]">You Might Like</h4>
             <Link href="#0" className="text-[12px] font-medium text-bs-primary hover:underline font-[Poppins]">See All</Link>
@@ -67,7 +67,7 @@ export async function FeedRightSidebar() {
       )} */}
 
       {/* ── Your Friends Card ── */}
-      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-bg dark:border-bs-dark2 transition-colors flex flex-col min-h-0">
+      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] p-[24px] border border-bs-border dark:border-bs-dark2 transition-colors flex flex-col min-h-0 bs-card-shadow">
         <div className="flex items-center justify-between mb-[24px]">
           <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] font-[Poppins]">Your Friends</h4>
           <Link href="#0" className="text-[12px] font-medium text-bs-primary hover:underline font-[Poppins]">See All</Link>
@@ -88,7 +88,7 @@ export async function FeedRightSidebar() {
             <div key={i} className="flex items-center justify-between group cursor-pointer">
               <div className="flex items-center gap-[12px]">
                 <div className="relative">
-                   <img src={friend.img} alt={friend.name} className="w-[45px] h-[45px] rounded-full object-cover shrink-0 border border-bs-bg dark:border-bs-dark2" />
+                   <img src={friend.img} alt={friend.name} className="w-[45px] h-[45px] rounded-full object-cover shrink-0 border border-bs-border dark:border-bs-dark2" />
                    {friend.active && (
                      <span className="absolute bottom-0 right-0 w-[10px] h-[10px] bg-bs-green border-2 border-white dark:border-bs-dark1 rounded-full" />
                    )}

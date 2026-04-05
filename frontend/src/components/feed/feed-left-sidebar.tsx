@@ -11,7 +11,7 @@ export async function FeedLeftSidebar() {
   return (
     <aside className="hidden lg:flex flex-col gap-[16px] w-full">
       {/* ── Explore Card ── */}
-      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] px-[24px] pt-[24px] pb-[16px] border border-bs-bg dark:border-bs-dark2 transition-colors">
+      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] px-[24px] pt-[24px] pb-[16px] border border-bs-border dark:border-bs-dark2 transition-colors bs-card-shadow">
         <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] mb-[24px] font-[Poppins]">Explore</h4>
         <ul className="space-y-[12px]">
           {exploreItems.map((item) => (
@@ -36,7 +36,7 @@ export async function FeedLeftSidebar() {
       </div>
 
       {/* ── Suggested People Card ── */}
-      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] px-[24px] pt-[24px] pb-[16px] border border-bs-bg dark:border-bs-dark2 transition-colors">
+      <div className="bg-white dark:bg-bs-dark1 rounded-[6px] px-[24px] pt-[24px] pb-[16px] border border-bs-border dark:border-bs-dark2 transition-colors bs-card-shadow">
         <div className="flex items-center justify-between mb-[24px]">
           <h4 className="text-bs-dark dark:text-bs-text font-semibold text-[18px] font-[Poppins]">Suggested People</h4>
           <Link href="#0" className="text-[12px] font-medium text-bs-primary leading-[18px] font-[Poppins]">See All</Link>
@@ -71,7 +71,7 @@ export async function FeedLeftSidebar() {
         </div>
         <div className="px-[24px] pb-[24px]">
           {events.map((ev, i) => (
-            <div key={i} className="mb-[16px] bg-white dark:bg-bs-dark2 rounded-[6px] cursor-pointer border border-bs-bg dark:border-bs-dark3 overflow-hidden">
+            <div key={i} className="mb-[16px] bg-white dark:bg-bs-dark2 rounded-[6px] cursor-pointer border border-bs-border dark:border-bs-dark3 overflow-hidden">
               <div className="w-full">
                 <img src={ev.img} alt={ev.title} className="w-full rounded-t-[6px] object-cover" />
               </div>

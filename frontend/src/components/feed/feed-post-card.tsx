@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useTogglePostLike, useCreateComment, useDeletePost, useToggleCommentLike } from "@/hooks/useFeed";
-import type { Post } from "@/data/mock-data";
 import { BsIcon } from "@/components/ui/bs-icons";
 import { BsInput } from "@/components/ui/bs-shared";
 import { UserProfileImage } from "@/components/ui/user-profile-image";
+import { useCreateComment, useDeletePost, useToggleCommentLike, useTogglePostLike } from "@/hooks/useFeed";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { toast } from "sonner";
 
 // ─── Reaction Buttons ─────────────────────────────────────────────────────
@@ -78,7 +77,7 @@ export function PostCard({ post, currentUser }: { post: any; currentUser?: any }
   const isPostLikedByMe = post.likes?.some((like: any) => like.userId === currentUser?.id);
 
   return (
-    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-bg dark:border-bs-dark2 transition-colors overflow-hidden">
+    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-border dark:border-bs-dark2 transition-colors overflow-hidden bs-card-shadow">
       {/* ── Post Header ── */}
       <div className="flex items-center justify-between px-[24px] pt-[24px] pb-[16px]">
         <div className="flex items-center gap-[12px]">
@@ -137,7 +136,7 @@ export function PostCard({ post, currentUser }: { post: any; currentUser?: any }
 
       {/* ── Post Image ── */}
       {post.image && (
-        <div className="w-full relative min-h-[300px] bg-slate-100 dark:bg-bs-dark2 px-[24px]">
+        <div className="w-full relative min-h-[300px] bg-white dark:bg-bs-dark1 px-[24px]">
           <Image
             src={post.image}
             alt="post image"

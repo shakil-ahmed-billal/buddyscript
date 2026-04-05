@@ -70,7 +70,7 @@ export function FeedCreatePost({ user }: { user?: any }) {
   };
 
   return (
-    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-bg dark:border-bs-dark2">
+    <div className="bg-white dark:bg-bs-dark1 rounded-[6px] mb-[24px] border border-bs-border dark:border-bs-dark2 bs-card-shadow">
       <div className="p-[24px]">
         {/* Textarea Area */}
         <div className="flex items-start">
