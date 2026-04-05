@@ -1,4 +1,4 @@
-import { redis } from "../config/redis.config";
+import { redis } from "../config/redis.config.js";
 
 /**
  * Get data from cache. Returns parsed JSON or null.
