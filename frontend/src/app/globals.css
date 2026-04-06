@@ -21,6 +21,7 @@
   --color-bs-text: var(--bs-text);
   --color-bs-muted: var(--bs-text-muted);
   --color-bs-border: var(--bs-border);
+  --color-bs-input-bg: var(--bs-input-bg);
   --color-bs-white: #FFFFFF;
   --color-bs-dark: #112032;
   --color-bs-dark1: #112032;
@@ -216,4 +217,21 @@
 .dark ._header_nav_link svg ._home1,
 .dark ._header_nav_link svg ._home_dark {
   stroke: #FFFFFF;
+}
+
+/* Auth Page Utilities */
+.auth-input {
+  @apply h-11 rounded-[6px] border border-bs-border bg-bs-input-bg px-4 py-2 text-sm transition-all focus:bg-white focus:ring-1 focus:ring-bs-primary/20 focus:border-bs-primary dark:focus:bg-bs-card-bg dark:text-white outline-none w-full;
+}
+
+.auth-label {
+  @apply text-bs-text text-sm font-medium mb-2 block;
+}
+
+.auth-btn-primary {
+  @apply w-full h-12 bg-bs-primary hover:bg-[#0d7de8] text-white font-medium text-base rounded-[6px] transition-all duration-300 hover:shadow-lg disabled:opacity-50;
+}
+
+.auth-card {
+  @apply bg-white dark:bg-bs-card-bg rounded-xl shadow-[7px_20px_60px_rgba(108,126,147,0.15)] p-8 w-full max-w-[420px];
 }
