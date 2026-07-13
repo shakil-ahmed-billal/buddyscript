@@ -9,6 +9,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { loginAction } from "@/services/auth.actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
+  remember: z.boolean().optional(),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -16,21 +27,29 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "/";
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: false,
+    },
+  });
 
+  const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
-    const result = await loginAction({ email, password });
+    const result = await loginAction({ email: data.email, password: data.password });
     setLoading(false);
 
     if (result.success) {
       toast.success("Successfully logged in!");
       router.push(redirectPath);
     } else {
-      toast.error(result.message || "Login failed");
+      toast.error(result.message || "Invalid credentials");
     }
   };
 
@@ -96,17 +115,17 @@ export function LoginForm() {
                 <div className="flex-1 border-t border-bs-border" />
               </div>
 
-              <form className="space-y-5" onSubmit={handleSubmit}>
+              <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="auth-label">Email</Label>
                   <Input
                     id="email"
-                    name="email"
                     type="email"
-                    required
                     placeholder="Enter your email"
                     className="auth-input"
+                    {...register("email")}
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -116,11 +135,11 @@ export function LoginForm() {
                   <Input
                     id="password"
                     type="password"
-                    name="password"
-                    required
                     placeholder="Enter your password"
                     className="auth-input"
+                    {...register("password")}
                   />
+                  {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
@@ -128,6 +147,7 @@ export function LoginForm() {
                     <Checkbox
                       id="remember"
                       className="border-[#C4C4C4] dark:border-bs-border data-[state=checked]:bg-bs-primary data-[state=checked]:border-bs-primary"
+                      {...register("remember")}
                     />
                     <label htmlFor="remember" className="text-sm text-bs-muted cursor-pointer select-none">
                       Remember me

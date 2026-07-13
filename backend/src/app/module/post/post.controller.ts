@@ -39,7 +39,10 @@ const createPost = catchAsync(async (req: Request, res: Response) => {
 
 const getFeed = catchAsync(async (req: Request, res: Response) => {
     const user = (req as any).user;
-    const result = await PostService.getFeed(user.id);
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    
+    const result = await PostService.getFeed(user.id, page, limit);
 
     sendResponse(res, {
         httpStatusCode: httpStatus.OK,

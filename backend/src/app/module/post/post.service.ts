@@ -24,7 +24,9 @@ const createPost = async (userId: string, payload: { content?: string; image?: s
   return result;
 };
 
-const getFeed = async (userId: string) => {
+const getFeed = async (userId: string, page: number = 1, limit: number = 10) => {
+  const skip = (page - 1) * limit;
+
   // Get all PUBLIC posts from all users AND PRIVATE posts from the logged-in user
   const posts = await prisma.post.findMany({
     where: {
@@ -36,6 +38,8 @@ const getFeed = async (userId: string) => {
     orderBy: {
       createdAt: "desc"
     },
+    skip,
+    take: limit,
     include: {
       author: {
         select: { id: true, name: true, firstName: true, lastName: true, image: true }
@@ -47,37 +51,43 @@ const getFeed = async (userId: string) => {
           }
         }
       },
+      // Only include a limited number of top-level comments (lazy load the rest later)
       comments: {
+        where: { parentId: null },
+        take: 3, // Show only 3 comments initially
+        orderBy: { createdAt: "desc" },
         include: {
           author: { select: { id: true, name: true, firstName: true, lastName: true, image: true } },
-          likes: {
-            include: {
-              user: {
-                select: { id: true, name: true, firstName: true, lastName: true, image: true }
-              }
-            }
-          },
-          replies: {
-            include: {
-              author: { select: { id: true, name: true, firstName: true, lastName: true, image: true } },
-              likes: {
-                include: {
-                  user: {
-                    select: { id: true, name: true, firstName: true, lastName: true, image: true }
-                  }
-                }
-              }
-            }
+          likes: true, // Only count likes or basic info, omit nested users if possible, but keep simple
+          _count: {
+            select: { replies: true } // Just count replies, don't load them
           }
-        },
-        where: {
-          parentId: null // Only fetch top-level comments initially
-        },
-        orderBy: { createdAt: "asc" }
+        }
+      },
+      _count: {
+        select: { comments: true, likes: true } // Get total counts
       }
     }
   });
-  return posts;
+  
+  const totalPosts = await prisma.post.count({
+    where: {
+      OR: [
+        { visibility: "PUBLIC" },
+        { authorId: userId }
+      ]
+    }
+  });
+
+  return {
+    data: posts,
+    meta: {
+      total: totalPosts,
+      page,
+      limit,
+      totalPages: Math.ceil(totalPosts / limit)
+    }
+  };
 };
 
 const deletePost = async (userId: string, postId: string) => {

@@ -9,32 +9,56 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { registerAction } from "@/services/auth.actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const registerSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  repeatPassword: z.string().min(6, "Please confirm your password"),
+  agreed: z.boolean().refine(val => val === true, "You must agree to the terms & conditions"),
+}).refine((data) => data.password === data.repeatPassword, {
+  message: "Passwords do not match",
+  path: ["repeatPassword"],
+});
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
-  const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!agreed) {
-      toast.error("Please agree to the terms & conditions");
-      return;
-    }
-    const formData = new FormData(e.currentTarget);
-    const firstName = formData.get("firstName") as string;
-    const lastName = formData.get("lastName") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const repeatPassword = formData.get("repeatPassword") as string;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+      agreed: false,
+    },
+  });
 
-    if (password !== repeatPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
+  const agreed = watch("agreed");
 
+  const onSubmit = async (data: RegisterFormValues) => {
     setLoading(true);
-    const result = await registerAction({ firstName, lastName, email, password });
+    const result = await registerAction({ 
+      firstName: data.firstName, 
+      lastName: data.lastName, 
+      email: data.email, 
+      password: data.password 
+    });
     setLoading(false);
 
     if (result.success) {
@@ -106,27 +130,27 @@ export function RegisterForm() {
                 <div className="flex-1 border-t border-bs-border" />
               </div>
 
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex gap-4">
                   <div className="space-y-2 flex-1">
                     <Label htmlFor="firstName" className="auth-label">First name</Label>
                     <Input
                       id="firstName"
-                      name="firstName"
-                      required
                       placeholder="First name"
                       className="auth-input"
+                      {...register("firstName")}
                     />
+                    {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>}
                   </div>
                   <div className="space-y-2 flex-1">
                     <Label htmlFor="lastName" className="auth-label">Last name</Label>
                     <Input
                       id="lastName"
-                      name="lastName"
-                      required
                       placeholder="Last name"
                       className="auth-input"
+                      {...register("lastName")}
                     />
+                    {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
                   </div>
                 </div>
 
@@ -134,12 +158,12 @@ export function RegisterForm() {
                   <Label htmlFor="email" className="auth-label">Email</Label>
                   <Input
                     id="email"
-                    name="email"
                     type="email"
-                    required
                     placeholder="Enter your email"
                     className="auth-input"
+                    {...register("email")}
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -147,12 +171,11 @@ export function RegisterForm() {
                   <Input
                     id="password"
                     type="password"
-                    name="password"
-                    required
-                    minLength={6}
                     placeholder="Create a password"
                     className="auth-input"
+                    {...register("password")}
                   />
+                  {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -160,25 +183,27 @@ export function RegisterForm() {
                   <Input
                     id="repeatPassword"
                     type="password"
-                    name="repeatPassword"
-                    required
-                    minLength={6}
                     placeholder="Confirm your password"
                     className="auth-input"
+                    {...register("repeatPassword")}
                   />
+                  {errors.repeatPassword && <p className="text-red-500 text-xs mt-1">{errors.repeatPassword.message}</p>}
                 </div>
 
                 <div className="flex items-center gap-2 pt-1 pb-2">
                   <Checkbox
                     id="terms"
                     checked={agreed}
-                    onCheckedChange={(v) => setAgreed(!!v)}
+                    onCheckedChange={(v) => {
+                      setValue("agreed", !!v, { shouldValidate: true });
+                    }}
                     className="border-[#C4C4C4] dark:border-bs-border data-[state=checked]:bg-bs-primary data-[state=checked]:border-bs-primary"
                   />
                   <label htmlFor="terms" className="text-sm text-bs-muted cursor-pointer select-none">
                     I agree to terms &amp; conditions
                   </label>
                 </div>
+                {errors.agreed && <p className="text-red-500 text-xs mt-1 -translate-y-2">{errors.agreed.message}</p>}
 
                 <div className="pt-2 pb-4">
                   <button

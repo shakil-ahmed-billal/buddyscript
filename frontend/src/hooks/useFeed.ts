@@ -1,13 +1,21 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { httpClient } from "@/lib/axios/httpClient";
 
 // Fetch the Feed (All Posts)
 export const useFeedPosts = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["feedPosts"],
-    queryFn: async () => {
-      const response: any = await httpClient.get("/api/v1/posts");
-      return response; // Return the whole body { success, message, data: [...] }
+    queryFn: async ({ pageParam = 1 }) => {
+      const response: any = await httpClient.get(`/api/v1/posts?page=${pageParam}&limit=10`);
+      return response; 
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const meta = lastPage?.data?.meta;
+      if (meta && meta.page < meta.totalPages) {
+        return meta.page + 1;
+      }
+      return undefined;
     },
   });
 };

@@ -49,15 +49,31 @@ app.use(
   })
 );
 
-const authLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	limit: 100,
+const globalLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 1000, // Limit each IP to 1000 requests per `window`
 	standardHeaders: 'draft-7',
 	legacyHeaders: false,
-  message: 'Too many requests from this IP, please try again after 15 minutes',
+	handler: (_req, res) => {
+		res.status(429).json({
+			success: false,
+			message: 'Too many requests from this IP, please try again after 15 minutes',
+		});
+	},
 });
 
-
+const authLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 20, // Strict limit for auth routes to prevent brute force
+	standardHeaders: 'draft-7',
+	legacyHeaders: false,
+	handler: (_req, res) => {
+		res.status(429).json({
+			success: false,
+			message: 'Too many authentication attempts, please try again after 15 minutes',
+		});
+	},
+});
 
 app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
@@ -65,9 +81,9 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(sanitizeRequest);
 app.use(morgan('dev'));
 
-app.all("/api/auth", toNodeHandler(auth));
+app.all("/api/auth", authLimiter, toNodeHandler(auth));
 app.use('/api/v1/auth', authLimiter);
-app.use('/api/v1', router);
+app.use('/api/v1', globalLimiter, router);
 
 app.get('/', (req: Request, res: Response) => {
   res.status(httpStatus.OK).json({

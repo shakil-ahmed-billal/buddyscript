@@ -205,7 +205,7 @@ const forgetPassword = async (email: string) => {
     });
 
     if (!isUserExist) {
-        throw new AppError(status.NOT_FOUND, "User not found");
+        return; // Fail silently to prevent email enumeration
     }
 
     await auth.api.requestPasswordResetEmailOTP({
@@ -219,7 +219,7 @@ const resetPassword = async (email: string, otp: string, newPassword: string) =>
     });
 
     if (!isUserExist) {
-        throw new AppError(status.NOT_FOUND, "User not found");
+        throw new AppError(status.BAD_REQUEST, "Invalid request or OTP");
     }
 
     await auth.api.resetPasswordEmailOTP({
