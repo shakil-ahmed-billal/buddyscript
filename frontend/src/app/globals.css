@@ -1,0 +1,237 @@
+/* BuddyScript — Poppins Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  
+  /* BuddyScript Theme Variables */
+  --color-bs-primary: #1890FF;
+  --color-bs-bg: var(--bs-bg);
+  --color-bs-card-bg: var(--bs-card-bg);
+  --color-bs-text: var(--bs-text);
+  --color-bs-muted: var(--bs-text-muted);
+  --color-bs-border: var(--bs-border);
+  --color-bs-input-bg: var(--bs-input-bg);
+  --color-bs-white: #FFFFFF;
+  --color-bs-dark: #112032;
+  --color-bs-dark1: #112032;
+  --color-bs-dark2: #232E42;
+  --color-bs-green: #0ACF83;
+}
+
+:root {
+  --background: #F0F2F5;
+  --foreground: #212121;
+  
+  /* BS Vars - Light */
+  --bs-bg: #F0F2F5;
+  --bs-card-bg: #FFFFFF;
+  --bs-text: #212121;
+  --bs-text-muted: #666666;
+  --bs-border: #E4E6EB;
+  --bs-input-bg: #F5F5F5;
+  --bs-comment-bg: #F2F4F7;
+
+  --primary: #1890FF;
+  --border: #F0F2F5;
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: #232E42;
+  --foreground: #FFFFFF;
+  
+  /* BS Vars - Dark */
+  --bs-bg: #232E42;
+  --bs-card-bg: #112032;
+  --bs-text: #FFFFFF;
+  --bs-text-muted: rgba(255, 255, 255, 0.46);
+  --bs-border: #232E42;
+  --bs-input-bg: #232E42;
+  --bs-comment-bg: #1B293D;
+
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  * {
+    @apply border-bs-border outline-none;
+  }
+  body {
+    @apply bg-bs-bg text-bs-text;
+    font-family: 'Poppins', sans-serif;
+    margin: 0px auto;
+    padding: 0px;
+  }
+  html {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    padding: 0px;
+    margin: 0 auto;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .bs-card-shadow {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* =============================================
+   BuddyScript Component Classes
+   ============================================= */
+.bs-comment-bubble {
+  background-color: var(--bs-comment-bg);
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+._layout_mode_swithing_btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateX(-0%);
+  z-index: 9999;
+}
+
+.dark ._layout_mode_swithing_btn ._layout_swithing_btn_link {
+  border: 1px solid #1890FF !important;
+}
+
+/* Targeted Blue Border for specific suggested buttons in Dark Mode */
+.dark ._bs_suggested_btn_outline {
+  border-color: #1890FF !important;
+  color: #1890FF !important;
+}
+
+._layout_swithing_btn_link {
+  background: #1890FF;
+  border: 1px solid #1890FF;
+  border-radius: 40px;
+  width: 66px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transform: rotate(90deg);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.dark ._layout_swithing_btn_link {
+  background: #232E42;
+  border-color: #232E42;
+}
+
+._layout_swithing_btn {
+  position: absolute;
+  left: 10px;
+  transition: 0.3s all ease;
+  z-index: 2;
+}
+
+.dark ._layout_swithing_btn {
+  left: calc(100% - 28px);
+}
+
+._layout_swithing_btn_round {
+  background: #FFFFFF;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.dark ._layout_swithing_btn_round {
+  background-color: #1890FF;
+}
+
+._layout_change_btn_ic1 {
+  position: absolute;
+  right: 16px;
+  transform: rotate(-90deg);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dark ._layout_change_btn_ic1 {
+  visibility: hidden;
+  opacity: 0;
+}
+
+._layout_change_btn_ic2 {
+  position: absolute;
+  left: 8px;
+  transform: rotate(-90deg);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dark ._layout_change_btn_ic2 {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* =============================================
+   BuddyScript Component Fixes for Dark Mode
+   ============================================= */
+.dark .bg-white {
+  @apply bg-bs-card-bg;
+}
+
+.dark .text-bs-dark {
+  @apply text-bs-text;
+}
+
+.dark .border-bs-bg {
+  @apply border-bs-border;
+}
+
+.dark hr {
+  @apply border-bs-border;
+}
+
+/* Navbar specific dark mode svg colors */
+.dark ._header_nav_link svg path {
+  fill: #FFFFFF;
+}
+
+.dark ._header_nav_link svg ._home,
+.dark ._header_nav_link svg ._home1,
+.dark ._header_nav_link svg ._home_dark {
+  stroke: #FFFFFF;
+}
+
+/* Auth Page Utilities */
+.auth-input {
+  @apply h-11 rounded-[6px] border border-bs-border bg-bs-input-bg px-4 py-2 text-sm transition-all focus:bg-white focus:ring-1 focus:ring-bs-primary/20 focus:border-bs-primary dark:focus:bg-bs-card-bg dark:text-white outline-none w-full;
+}
+
+.auth-label {
+  @apply text-bs-text text-sm font-medium mb-2 block;
+}
+
+.auth-btn-primary {
+  @apply w-full h-12 bg-bs-primary hover:bg-[#0d7de8] text-white font-medium text-base rounded-[6px] transition-all duration-300 hover:shadow-lg disabled:opacity-50;
+}
+
+.auth-card {
+  @apply bg-white dark:bg-bs-card-bg rounded-xl shadow-[7px_20px_60px_rgba(108,126,147,0.15)] p-8 w-full max-w-[420px];
+}
