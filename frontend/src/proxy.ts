@@ -24,10 +24,15 @@ export async function proxy(request: NextRequest) {
         const accessToken = request.cookies.get("accessToken")?.value;
         const refreshToken = request.cookies.get("refreshToken")?.value;
 
-        const jwtSecret = process.env.JWT_SECRET || "3a9f7ff527137c4bc9dc95559159803c5d72b7fe040b3d3e17f5a643c92569a7"; // fallback for dev
+        const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret_key"; // Must match backend JWT_SECRET
 
         const decodedAccessToken = accessToken && jwtUtils.verifyToken(accessToken, jwtSecret).data;
         const isValidAccessToken = accessToken && jwtUtils.verifyToken(accessToken, jwtSecret).success;
+
+        console.log(`[PROXY DEBUG] path=${pathname} hasAccessToken=${!!accessToken} isValid=${isValidAccessToken} hasRefresh=${!!refreshToken}`);
+        if (accessToken && !isValidAccessToken) {
+            console.log(`[PROXY DEBUG] Token verify result:`, jwtUtils.verifyToken(accessToken, jwtSecret));
+        }
 
         let userRole: UserRole | null = null;
         if (decodedAccessToken) {
