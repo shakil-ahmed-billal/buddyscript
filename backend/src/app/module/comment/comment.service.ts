@@ -52,7 +52,20 @@ const toggleLikeComment = async (userId: string, commentId: string) => {
   }
 };
 
+const deleteComment = async (userId: string, commentId: string) => {
+  const comment = await prisma.comment.findUnique({ where: { id: commentId } });
+  if (!comment) throw new AppError(httpStatus.NOT_FOUND, "Comment not found");
+
+  if (comment.authorId !== userId) {
+    throw new AppError(httpStatus.FORBIDDEN, "You can only delete your own comments");
+  }
+
+  await prisma.comment.delete({ where: { id: commentId } });
+  return { id: commentId };
+};
+
 export const CommentService = {
   createComment,
-  toggleLikeComment
+  toggleLikeComment,
+  deleteComment,
 };

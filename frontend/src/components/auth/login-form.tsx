@@ -42,14 +42,23 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
-    const result = await loginAction({ email: data.email, password: data.password });
-    setLoading(false);
-
-    if (result.success) {
-      toast.success("Successfully logged in!");
-      router.push(redirectPath);
-    } else {
-      toast.error(result.message || "Invalid credentials");
+    try {
+      const result = await loginAction({ email: data.email, password: data.password });
+      if (result.success) {
+        toast.success("Successfully logged in!");
+        router.push(redirectPath);
+      } else {
+        // Always show generic message — never reveal if email exists or not
+        const safeMessage =
+          result.message === "Invalid credentials" || result.message?.toLowerCase().includes("password") || result.message?.toLowerCase().includes("credential")
+            ? "Invalid email or password. Please try again."
+            : "Something went wrong. Please try again.";
+        toast.error(safeMessage);
+      }
+    } catch {
+      toast.error("Unable to connect. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
     }
   };
 

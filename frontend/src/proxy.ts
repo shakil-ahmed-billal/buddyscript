@@ -29,10 +29,7 @@ export async function proxy(request: NextRequest) {
         const decodedAccessToken = accessToken && jwtUtils.verifyToken(accessToken, jwtSecret).data;
         const isValidAccessToken = accessToken && jwtUtils.verifyToken(accessToken, jwtSecret).success;
 
-        console.log(`[PROXY DEBUG] path=${pathname} hasAccessToken=${!!accessToken} isValid=${isValidAccessToken} hasRefresh=${!!refreshToken}`);
-        if (accessToken && !isValidAccessToken) {
-            console.log(`[PROXY DEBUG] Token verify result:`, jwtUtils.verifyToken(accessToken, jwtSecret));
-        }
+
 
         let userRole: UserRole | null = null;
         if (decodedAccessToken) {

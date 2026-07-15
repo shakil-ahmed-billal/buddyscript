@@ -53,19 +53,34 @@ export function RegisterForm() {
 
   const onSubmit = async (data: RegisterFormValues) => {
     setLoading(true);
-    const result = await registerAction({ 
-      firstName: data.firstName, 
-      lastName: data.lastName, 
-      email: data.email, 
-      password: data.password 
-    });
-    setLoading(false);
+    try {
+      const result = await registerAction({ 
+        firstName: data.firstName, 
+        lastName: data.lastName, 
+        email: data.email, 
+        password: data.password 
+      });
 
-    if (result.success) {
-      toast.success("Successfully registered! Redirecting...");
-      router.push("/");
-    } else {
-      toast.error(result.message || "Registration failed");
+      if (result.success) {
+        toast.success("Account created successfully! Redirecting...");
+        router.push("/");
+      } else {
+        // Show safe, user-friendly error messages only
+        const rawMsg = result.message?.toLowerCase() || "";
+        let safeMessage = "Registration failed. Please try again.";
+        if (rawMsg.includes("email") && rawMsg.includes("exist")) {
+          safeMessage = "An account with this email already exists. Please login instead.";
+        } else if (rawMsg.includes("password")) {
+          safeMessage = "Password does not meet the requirements. Please try again.";
+        } else if (rawMsg.includes("validation") || rawMsg.includes("required")) {
+          safeMessage = "Please fill in all required fields correctly.";
+        }
+        toast.error(safeMessage);
+      }
+    } catch {
+      toast.error("Unable to connect. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
     }
   };
 

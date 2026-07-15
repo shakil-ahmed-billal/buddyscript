@@ -19,4 +19,9 @@ router.post(
   CommentController.toggleLikeComment
 );
 
+router.delete(
+  "/:id",
+  CommentController.deleteComment
+);
+
 export const CommentRoutes = router;
