@@ -1,15 +1,11 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "pnpm run build && mkdir -p .output && echo '{}' > .output/config.json",
+  "outputDirectory": ".output",
+  "rewrites": [
     {
-      "src": "src/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "src/index.ts"
+      "source": "/(.*)",
+      "destination": "/api"
     }
   ]
 }

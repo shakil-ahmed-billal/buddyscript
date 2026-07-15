@@ -1,9 +1,7 @@
 node_modules/
 .env
 dist/
-api/
 backend/dist/
-backend/api/
 backend/generated/
 frontend/.next/
 *.log
