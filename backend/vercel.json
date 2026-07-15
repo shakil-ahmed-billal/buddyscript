@@ -1,11 +1,5 @@
 {
   "version": 2,
   "buildCommand": "pnpm run build && mkdir -p .output && echo '{}' > .output/config.json",
-  "outputDirectory": ".output",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api"
-    }
-  ]
+  "outputDirectory": ".output"
 }
