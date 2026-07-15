@@ -2,6 +2,7 @@
   "name": "buddyscript-backend",
   "version": "1.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.25.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "prisma generate",
