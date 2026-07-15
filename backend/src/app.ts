@@ -19,6 +19,7 @@ const app: Application = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "src/app/templates"));
+app.set("trust proxy", 1); // Trust first proxy (Vercel)
 
 app.use(helmet());
 

@@ -43,7 +43,8 @@ const nextConfig = {
   },
   async rewrites() {
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      process.env.NEXT_PUBLIC_BACKEND_URL ||
+      (process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/api\/v1\/?$/, '') : "http://localhost:8000");
     return [
       {
         source: "/api/auth/:path*",
