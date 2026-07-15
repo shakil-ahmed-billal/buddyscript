@@ -22,7 +22,7 @@
  }) {
    return (
      <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
-       <body className="font-sans antialiased min-h-screen">
+       <body suppressHydrationWarning className="font-sans antialiased min-h-screen">
          <Providers>
            {children}
            <Toaster />
