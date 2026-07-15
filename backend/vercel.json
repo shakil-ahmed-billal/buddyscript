@@ -1,5 +1,15 @@
 {
   "version": 2,
-  "buildCommand": "pnpm run build && mkdir -p .output && echo '{}' > .output/config.json",
-  "outputDirectory": ".output"
+  "builds": [
+    {
+      "src": "src/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/index.ts"
+    }
+  ]
 }
